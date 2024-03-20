@@ -7,8 +7,8 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { CreateUserDto } from '../dto/createUser.dto';
-import { UpdateUserDto } from '../dto/updateUser.dto';
+import { CreateUserDto } from '../dto/create-user.dto';
+import { UpdateUserDto } from '../dto/update-user.dto';
 import { Role } from 'src/modules/roles/entities/role.entity';
 
 @Entity('users')

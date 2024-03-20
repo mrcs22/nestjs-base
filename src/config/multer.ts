@@ -5,11 +5,11 @@ import * as path from 'path';
 import {
   AllowedFileMime,
   iterableAllowedFileMimes,
-} from '../types/multer/parsedFile';
-import { environmentVariables } from './environmentVariables';
-import { megabytesToBytes } from '../utils/helpers/megabytesToBytes';
+} from '../types/multer/parsed-file';
+import { environmentVariables } from './environment-variables';
+import { megabytesToBytes } from '../utils/helpers/megabytes-to-bytes';
 import { Request } from 'express';
-import AppException from 'src/exceptionFilters/AppException/AppException';
+import AppException from 'src/exception-filters/app-exception/app-exception';
 import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
 
 const fileNameHandler = (

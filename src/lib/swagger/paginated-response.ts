@@ -1,6 +1,6 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiOkResponse, getSchemaPath, ApiExtraModels } from '@nestjs/swagger';
-import { PaginationDto } from 'src/utils/pagination/dto/PaginationDto';
+import { PaginationDto } from 'src/utils/pagination/dto/pagination.dto';
 
 export interface PaginationSchema {
   totalItems: number;

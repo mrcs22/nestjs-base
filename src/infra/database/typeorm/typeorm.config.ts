@@ -1,4 +1,4 @@
-import { environmentVariables } from '../../../config/environmentVariables';
+import { environmentVariables } from '../../../config/environment-variables';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
 

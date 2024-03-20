@@ -1,14 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { $Entities$Service } from '../$entities$.service';
-import { Abstract$Entities$Repository } from '../repositories/abstract.$entities$.repository';
-import { ListAll$Entities$Dto } from '../dto/listAll$Entities$.dto';
+import { $Entities$Service } from '../$entities-kebab$.service';
+import { Abstract$Entities$Repository } from '../repositories/abstract.$entities-kebab$.repository';
+import { ListAll$Entities$Dto } from '../dto/list-$entities-kebab$.dto';
 import {
   $Entity$Factory,
   Create$Entity$DtoFactory,
   Update$Entity$DtoFactory,
-} from './factory/$entity$';
-import { $Entity$ } from '../entities/$entity$.entity';
-import AppException from 'src/exceptionFilters/AppException/AppException';
+} from './factory/$entity-kebab$.factory'
+import { $Entity$ } from '../entities/$entity-kebab$.entity';
+import AppException from 'src/exception-filters/app-exception/app-exception';
 import { faker } from '@faker-js/faker';
 import { HttpStatus } from '@nestjs/common';
 

@@ -5,8 +5,8 @@ import {
   PrimaryColumn,
   DeleteDateColumn,
 } from 'typeorm';
-import { Create$Entity$Dto } from '../dto/create$Entity$.dto';
-import { Update$Entity$Dto } from '../dto/update$Entity$.dto';
+import { Create$Entity$Dto } from '../dto/create-$entity-kebab$.dto';
+import { Update$Entity$Dto } from '../dto/update-$entity-kebab$.dto';
 
 //@Entity()
 export class $Entity$ {

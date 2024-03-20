@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker';
-import { Create$Entity$Dto } from '../../dto/create$Entity$.dto';
-import { Update$Entity$Dto } from '../../dto/update$Entity$.dto';
-import { $Entity$ } from '../../entities/$entity$.entity';
-import { Listed$Entity$Dto } from '../../dto/listed$Entity$.dto';
+import { Create$Entity$Dto } from '../../dto/create-$entity-kebab$.dto';
+import { Update$Entity$Dto } from '../../dto/update-$entity-kebab$.dto';
+import { $Entity$ } from '../../entities/$entity-kebab$.entity';
+import { Listed$Entity$Dto } from '../../dto/listed-$entity-kebab$.dto';
 
 export class Create$Entity$DtoFactory {
   static generate(): Create$Entity$Dto {

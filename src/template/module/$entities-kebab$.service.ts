@@ -1,14 +1,14 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import AppException from 'src/exceptionFilters/AppException/AppException';
-import { Create$Entity$Dto } from './dto/create$Entity$.dto';
-import { Update$Entity$Dto } from './dto/update$Entity$.dto';
-import { Abstract$Entities$Repository } from './repositories/abstract.$entities$.repository';
-import { $Entity$ } from './entities/$entity$.entity';
-import { ListAll$Entities$Dto } from './dto/listAll$Entities$.dto';
+import AppException from 'src/exception-filters/app-exception/app-exception';
+import { Create$Entity$Dto } from './dto/create-$entity-kebab$.dto';
+import { Update$Entity$Dto } from './dto/update-$entity-kebab$.dto';
+import { Abstract$Entities$Repository } from './repositories/abstract.$entities-kebab$.repository';
+import { $Entity$ } from './entities/$entity-kebab$.entity';
+import { ListAll$Entities$Dto } from './dto/list-$entities-kebab$.dto';
 import {
   FindServiceMode,
   FindServiceResult,
-} from 'src/types/modules/findServiceMode';
+} from 'src/types/modules/find-service-mode';
 
 @Injectable()
 export class $Entities$Service {

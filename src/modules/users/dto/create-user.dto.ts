@@ -7,8 +7,8 @@ import {
   isEmail,
   IsEmail,
 } from 'class-validator';
-import { IsGenericRelationItem } from 'src/lib/swagger/IsGenericRelationItem';
-import { GenericRelationItemDto } from 'src/utils/helpers/dto/selectableItem.dto';
+import { IsGenericRelationItem } from 'src/lib/swagger/validations';
+import { GenericRelationItemDto } from 'src/utils/helpers/dto/generic-relation-item.dto';
 
 export class CreateUserDto {
   @IsNotEmpty()

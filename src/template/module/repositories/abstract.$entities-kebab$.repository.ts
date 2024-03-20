@@ -1,7 +1,7 @@
-import { RepositoryListingResult } from 'src/types/modules/RepositoryListingMode';
-import { ListAll$Entities$Dto } from '../dto/listAll$Entities$.dto';
-import { Listed$Entity$Dto } from '../dto/listed$Entity$.dto';
-import { $Entity$ } from '../entities/$entity$.entity';
+import { RepositoryListingResult } from 'src/types/modules/repository-listing-mode';
+import { $Entity$ } from '../entities/$entity-kebab$.entity';
+import { ListAll$Entities$Dto } from '../dto/list-$entities-kebab$.dto';
+import { Listed$Entity$Dto } from '../dto/listed-$entity-kebab$.dto';
 
 export abstract class Abstract$Entities$Repository {
   abstract create(create$Entity$Dto: $Entity$): Promise<$Entity$>;

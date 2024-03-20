@@ -1,14 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from '../users.service';
 import { AbstractUsersRepository } from '../repositories/abstract.users.repository';
-import { ListAllUsersDto } from '../dto/listAllUsers.dto';
+import { ListAllUsersDto } from '../dto/list-users.dto';
 import {
   UserFactory,
   CreateuserDtoFactory,
   UpdateuserDtoFactory,
 } from './factory/user';
 import { User } from '../entities/user.entity';
-import AppException from 'src/exceptionFilters/AppException/AppException';
+import AppException from 'src/exception-filters/app-exception/app-exception';
 import { faker } from '@faker-js/faker';
 import { HttpStatus } from '@nestjs/common';
 import { RolesModule } from 'src/modules/roles/roles.module';

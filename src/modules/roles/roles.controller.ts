@@ -11,17 +11,17 @@ import {
   Req,
 } from '@nestjs/common';
 import { RolesService } from './roles.service';
-import { CreateRoleDto } from './dto/createRole.dto';
-import { UpdateRoleDto } from './dto/updateRole.dto';
-import { ListAllRolesDto } from './dto/listAllRoles.dto';
-import PaginationWrapper from 'src/utils/pagination/PaginationWrapper';
+import { CreateRoleDto } from './dto/create-role.dto';
+import { UpdateRoleDto } from './dto/update-role.dto';
+import { ListAllRolesDto } from './dto/list-roles.dto';
+import PaginationWrapper from 'src/utils/pagination/pagination-wrapper';
 import { ApiTags } from '@nestjs/swagger';
-import { ApiPaginatedResponse } from 'src/lib/swagger/ApiPaginatedResponse';
+import { ApiPaginatedResponse } from 'src/lib/swagger/paginated-response';
 import { Request } from 'express';
-import { AutenticatedJwtUser } from 'src/types/modules/auth/signinJwtPayload';
+import { AutenticatedJwtUser } from 'src/types/modules/auth/signin-jwt-payload';
 import { RequiredPermission } from 'src/modules/auth/strategy/roles.guard';
-import { ListedRoleDto } from './dto/listedRole.dto';
-import { RolePermissionName } from 'src/types/roles/rolePermission';
+import { ListedRoleDto } from './dto/listed-role.dto';
+import { RolePermissionName } from 'src/types/roles/role-permission';
 
 const requiredPermission: RolePermissionName =
   'roles';

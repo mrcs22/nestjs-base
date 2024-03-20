@@ -1,14 +1,14 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import AppException from 'src/exceptionFilters/AppException/AppException';
-import { CreateUserDto } from './dto/createUser.dto';
-import { UpdateUserDto } from './dto/updateUser.dto';
+import AppException from 'src/exception-filters/app-exception/app-exception';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { AbstractUsersRepository } from './repositories/abstract.users.repository';
 import { User } from './entities/user.entity';
-import { ListAllUsersDto } from './dto/listAllUsers.dto';
+import { ListAllUsersDto } from './dto/list-users.dto';
 import {
   FindServiceMode,
   FindServiceResult,
-} from 'src/types/modules/findServiceMode';
+} from 'src/types/modules/find-service-mode';
 import { hash } from 'bcrypt';
 import * as crypto from 'crypto';
 import { MailService } from '../mail/mail.service';

@@ -7,8 +7,8 @@ import express from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import path from 'path';
-import { environmentVariables } from './config/environmentVariables';
-import { setupSwaggerDocs } from './config/setupDocs';
+import { environmentVariables } from './config/environment-variables';
+import { setupSwaggerDocs } from './config/setup-docs';
 
 dotenv.config();
 

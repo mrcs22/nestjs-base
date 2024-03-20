@@ -1,10 +1,10 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { SetMetadata } from '@nestjs/common';
-import { RolePermissionName } from 'src/types/roles/rolePermission';
-import { RolePermissionOption } from 'src/types/roles/rolePermissionOptions';
-import { AutenticatedJwtUser } from 'src/types/modules/auth/signinJwtPayload';
-import { IS_PUBLIC_KEY } from './jwtAuth.guard';
+import { RolePermissionName } from 'src/types/roles/role-permission';
+import { RolePermissionOption } from 'src/types/roles/role-permission-options';
+import { AutenticatedJwtUser } from 'src/types/modules/auth/signin-jwt-payload';
+import { IS_PUBLIC_KEY } from './jwt-auth.guard';
 
 export const PERMISSION_KEY = 'requiredPermission';
 

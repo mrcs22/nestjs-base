@@ -1,5 +1,5 @@
-import { environmentVariables } from 'src/config/environmentVariables';
-import { deleteFile } from 'src/utils/helpers/deleteFile';
+import { environmentVariables } from 'src/config/environment-variables';
+import { deleteFile } from 'src/utils/helpers/delete-file';
 
 class ParsedFile {
   fieldname: string;

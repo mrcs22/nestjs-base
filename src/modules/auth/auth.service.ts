@@ -5,11 +5,11 @@ import { JwtService } from '@nestjs/jwt';
 import { SignInDto } from './dto/sigin.dto';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
-import { RequestRecoverPasswordCodeDto } from './dto/requestRecoverPasswordCode.dto';
+import { RequestRecoverPasswordCodeDto } from './dto/request-recover-password-code.dto';
 import { MailService } from '../mail/mail.service';
-import { environmentVariables } from 'src/config/environmentVariables';
-import { RecoverPasswordDto } from './dto/recoverPassword.dto';
-import AppException from 'src/exceptionFilters/AppException/AppException';
+import { environmentVariables } from 'src/config/environment-variables';
+import { RecoverPasswordDto } from './dto/recover-password.dto';
+import AppException from 'src/exception-filters/app-exception/app-exception';
 import { UsersService } from '../users/users.service';
 import { User } from '../users/entities/user.entity';
 

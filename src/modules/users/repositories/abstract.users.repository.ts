@@ -1,6 +1,6 @@
-import { RepositoryListingResult } from 'src/types/modules/RepositoryListingMode';
-import { ListAllUsersDto } from '../dto/listAllUsers.dto';
-import { ListedUserDto } from '../dto/listedUser.dto';
+import { RepositoryListingResult } from 'src/types/modules/repository-listing-mode';
+import { ListAllUsersDto } from '../dto/list-users.dto';
+import { ListedUserDto } from '../dto/listed-user.dto';
 import { User } from '../entities/user.entity';
 
 export abstract class AbstractUsersRepository {

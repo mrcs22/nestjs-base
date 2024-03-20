@@ -18,7 +18,7 @@
     "test:cov": "jest -i --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "typeorm": "ts-node  ./node_modules/typeorm/cli -d ./src/infra/database/typeorm/typeOrm.config.ts",
+    "typeorm": "ts-node  ./node_modules/typeorm/cli -d ./src/infra/database/typeorm/typeorm.config.ts",
     "typeorm:migration-run": "npm run build && npm run typeorm migration:run",
     "typeorm:migration-generate": "if [ -z \"$npm_config_name\" ]; then echo 'Error: Migration name not provided'; exit 1; fi && npm run typeorm:migration-run && npm run typeorm migration:generate ./src/infra/database/typeorm/migrations/$npm_config_name",
     "typeorm:migration-create": "if [ -z \"$npm_config_name\" ]; then echo 'Error: Migration name not provided'; exit 1; fi && typeorm migration:create ./src/infra/database/typeorm/migrations/$npm_config_name",
@@ -97,7 +97,7 @@
     "modulePaths": [
       "<rootDir>"
     ],
-    "testRegex": "^(?!.*\\$entity\\$\\.service\\.spec\\.ts$).*\\.spec\\.ts$",
+    "testRegex": "^(?!.*\\$entities-kebab\\$\\.service\\.spec\\.ts$).*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },

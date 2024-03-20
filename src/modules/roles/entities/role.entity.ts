@@ -8,8 +8,8 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
-import { CreateRoleDto } from '../dto/createRole.dto';
-import { UpdateRoleDto } from '../dto/updateRole.dto';
+import { CreateRoleDto } from '../dto/create-role.dto';
+import { UpdateRoleDto } from '../dto/update-role.dto';
 import { Permission } from './permissions.entity';
 
 @Entity('roles')

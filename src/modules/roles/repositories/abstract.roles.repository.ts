@@ -1,6 +1,6 @@
-import { RepositoryListingResult } from 'src/types/modules/RepositoryListingMode';
-import { ListAllRolesDto } from '../dto/listAllRoles.dto';
-import { ListedRoleDto } from '../dto/listedRole.dto';
+import { RepositoryListingResult } from 'src/types/modules/repository-listing-mode';
+import { ListAllRolesDto } from '../dto/list-roles.dto';
+import { ListedRoleDto } from '../dto/listed-role.dto';
 import { Role } from '../entities/role.entity';
 
 export abstract class AbstractRolesRepository {

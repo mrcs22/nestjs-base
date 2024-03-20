@@ -2,9 +2,9 @@ import { DataSource, EntityManager, Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { User } from '../../entities/user.entity';
 import { AbstractUsersRepository } from '../abstract.users.repository';
-import { ListAllUsersDto } from '../../dto/listAllUsers.dto';
-import { ListedUserDto } from '../../dto/listedUser.dto';
-import { RepositoryListingResult } from 'src/types/modules/RepositoryListingMode';
+import { ListAllUsersDto } from '../../dto/list-users.dto';
+import { ListedUserDto } from '../../dto/listed-user.dto';
+import { RepositoryListingResult } from 'src/types/modules/repository-listing-mode';
 
 @Injectable()
 export class UsersTypeormRepository extends AbstractUsersRepository {

@@ -1,10 +1,10 @@
 import { DataSource, EntityManager, Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
-import { $Entity$ } from '../../entities/$entity$.entity';
-import { Abstract$Entities$Repository } from '../abstract.$entities$.repository';
-import { ListAll$Entities$Dto } from '../../dto/listAll$Entities$.dto';
-import { Listed$Entity$Dto } from '../../dto/listed$Entity$.dto';
-import { RepositoryListingResult } from 'src/types/modules/RepositoryListingMode';
+import { $Entity$ } from '../../entities/$entity-kebab$.entity';
+import { Abstract$Entities$Repository } from '../abstract.$entities-kebab$.repository';
+import { ListAll$Entities$Dto } from '../../dto/list-$entities-kebab$.dto';
+import { Listed$Entity$Dto } from '../../dto/listed-$entity-kebab$.dto';
+import { RepositoryListingResult } from 'src/types/modules/repository-listing-mode';
 
 @Injectable()
 export class $Entities$TypeormRepository extends Abstract$Entities$Repository {

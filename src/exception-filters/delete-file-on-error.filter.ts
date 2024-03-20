@@ -5,7 +5,7 @@ import {
   HttpException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { deleteFile } from '../utils/helpers/deleteFile';
+import { deleteFile } from '../utils/helpers/delete-file';
 
 @Catch(HttpException)
 export class DeleteFileOnErrorFilter implements ExceptionFilter {

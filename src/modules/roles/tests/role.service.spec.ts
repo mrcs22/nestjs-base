@@ -1,14 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { RolesService } from '../roles.service';
 import { AbstractRolesRepository } from '../repositories/abstract.roles.repository';
-import { ListAllRolesDto } from '../dto/listAllRoles.dto';
+import { ListAllRolesDto } from '../dto/list-roles.dto';
 import {
   RoleFactory,
   CreateroleDtoFactory,
   UpdateroleDtoFactory,
 } from './factory/role';
 import { Role } from '../entities/role.entity';
-import AppException from 'src/exceptionFilters/AppException/AppException';
+import AppException from 'src/exception-filters/app-exception/app-exception';
 import { faker } from '@faker-js/faker';
 import { HttpStatus } from '@nestjs/common';
 

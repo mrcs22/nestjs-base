@@ -1,4 +1,4 @@
-import { RolePermissionOptions } from './rolePermissionOptions';
+import { RolePermissionOptions } from './role-permission-options';
 
 export const iterableRolePermissionNames = [
   'users', 'roles'

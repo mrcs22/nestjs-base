@@ -1,9 +1,9 @@
 import { IsBoolean, ValidateIf } from 'class-validator';
-import { ApiEnumFromArray } from 'src/lib/swagger/ApiEnumFromArray';
-import { RolePermissionName, iterableRolePermissionNames } from 'src/types/roles/rolePermission';
+import { EnumFromArray } from 'src/lib/swagger/validations';
+import { RolePermissionName, iterableRolePermissionNames } from 'src/types/roles/role-permission';
 
 export class CreatePermissionDto {
-  @ApiEnumFromArray(iterableRolePermissionNames)
+  @EnumFromArray(iterableRolePermissionNames)
   name: RolePermissionName;
 
   @IsBoolean()

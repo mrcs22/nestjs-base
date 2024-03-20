@@ -4,8 +4,8 @@ import Handlebars from 'handlebars';
 import * as nodemailer from 'nodemailer';
 import Mail from 'nodemailer/lib/mailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
-import { environmentVariables } from 'src/config/environmentVariables';
-import { MailAttachment } from 'src/types/modules/mail/mailAttachment';
+import { environmentVariables } from 'src/config/environment-variables';
+import { MailAttachment } from 'src/types/modules/mail/mail-attachment';
 
 export interface ISendTemporyPasswordMailParams {
   to: string;
@@ -30,7 +30,7 @@ export class MailService {
     temporaryPassword,
   }: ISendTemporyPasswordMailParams): Promise<void> {
     const subject = 'Primeiro acesso - Senha temporária';
-    const templatePath = `${__dirname}/../../static/mail/templates/temporaryPasswordMail.html`;
+    const templatePath = `${__dirname}/../../static/mail/templates/temporary-password-mail.html`;
 
     await this.sendMail({
       to,
@@ -48,7 +48,7 @@ export class MailService {
     recoverUrl,
   }: ISendRecoverPasswordMailParams): Promise<void> {
     const subject = 'Recuperação de senha';
-    const templatePath = `${__dirname}/../../static/mail/templates/recoverPasswordMail.html`;
+    const templatePath = `${__dirname}/../../static/mail/templates/recover-password-mail.html`;
 
     await this.sendMail({
       to,

@@ -1,14 +1,14 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import AppException from 'src/exceptionFilters/AppException/AppException';
-import { CreateRoleDto } from './dto/createRole.dto';
-import { UpdateRoleDto } from './dto/updateRole.dto';
+import AppException from 'src/exception-filters/app-exception/app-exception';
+import { CreateRoleDto } from './dto/create-role.dto';
+import { UpdateRoleDto } from './dto/update-role.dto';
 import { AbstractRolesRepository } from './repositories/abstract.roles.repository';
 import { Role } from './entities/role.entity';
-import { ListAllRolesDto } from './dto/listAllRoles.dto';
+import { ListAllRolesDto } from './dto/list-roles.dto';
 import {
   FindServiceMode,
   FindServiceResult,
-} from 'src/types/modules/findServiceMode';
+} from 'src/types/modules/find-service-mode';
 
 @Injectable()
 export class RolesService {

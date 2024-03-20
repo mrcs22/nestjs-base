@@ -2,9 +2,9 @@ import { Body, Controller, Get, HttpCode, Post, Query } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiTags } from '@nestjs/swagger';
 import { SignInDto } from './dto/sigin.dto';
-import { Public } from './strategy/jwtAuth.guard';
-import { RequestRecoverPasswordCodeDto } from './dto/requestRecoverPasswordCode.dto';
-import { RecoverPasswordDto } from './dto/recoverPassword.dto';
+import { Public } from './strategy/jwt-auth.guard';
+import { RequestRecoverPasswordCodeDto } from './dto/request-recover-password-code.dto';
+import { RecoverPasswordDto } from './dto/recover-password.dto';
 
 @ApiTags('auth')
 @Public()

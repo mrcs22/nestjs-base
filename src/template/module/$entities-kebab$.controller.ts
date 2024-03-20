@@ -10,24 +10,24 @@ import {
   Query,
   Req,
 } from '@nestjs/common';
-import { $Entities$Service } from './$entities$.service';
-import { Create$Entity$Dto } from './dto/create$Entity$.dto';
-import { Update$Entity$Dto } from './dto/update$Entity$.dto';
-import { ListAll$Entities$Dto } from './dto/listAll$Entities$.dto';
-import PaginationWrapper from 'src/utils/pagination/PaginationWrapper';
+import { $Entities$Service } from './$entities-kebab$.service';
+import { Create$Entity$Dto } from './dto/create-$entity-kebab$.dto';
+import { Update$Entity$Dto } from './dto/update-$entity-kebab$.dto';
+import { ListAll$Entities$Dto } from './dto/list-$entities-kebab$.dto';
+import PaginationWrapper from 'src/utils/pagination/pagination-wrapper';
 import { ApiTags } from '@nestjs/swagger';
-import { ApiPaginatedResponse } from 'src/lib/swagger/ApiPaginatedResponse';
+import { ApiPaginatedResponse } from 'src/lib/swagger/paginated-response';
 import { Request } from 'express';
-import { AutenticatedJwtUser } from 'src/types/modules/auth/signinJwtPayload';
+import { AutenticatedJwtUser } from 'src/types/modules/auth/signin-jwt-payload';
 import { RequiredPermission } from 'src/modules/auth/strategy/roles.guard';
-import { Listed$Entity$Dto } from './dto/listed$Entity$.dto';
-import { RolePermissionName } from 'src/types/roles/rolePermission';
+import { Listed$Entity$Dto } from './dto/listed-$entity-kebab$.dto';
+import { RolePermissionName } from 'src/types/roles/role-permission';
 
 const requiredPermission: RolePermissionName =
   '$permission_name$' as RolePermissionName;
 
-@ApiTags('$entity_kebab$')
-@Controller('$entity_kebab$')
+@ApiTags('$entities_kebab$')
+@Controller('$entities_kebab$')
 export class $Entities$Controller {
   constructor(private readonly $entity$Service: $Entities$Service) {}
 

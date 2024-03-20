@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker';
-import { CreateUserDto } from '../../dto/createUser.dto';
-import { UpdateUserDto } from '../../dto/updateUser.dto';
+import { CreateUserDto } from '../../dto/create-user.dto';
+import { UpdateUserDto } from '../../dto/update-user.dto';
 import { User } from '../../entities/user.entity';
-import { ListedUserDto } from '../../dto/listedUser.dto';
+import { ListedUserDto } from '../../dto/listed-user.dto';
 import { CreateroleDtoFactory, RoleFactory } from 'src/modules/roles/tests/factory/role';
 
 export class CreateuserDtoFactory {

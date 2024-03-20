@@ -2,9 +2,9 @@ import { DataSource, EntityManager, Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { Role } from '../../entities/role.entity';
 import { AbstractRolesRepository } from '../abstract.roles.repository';
-import { ListAllRolesDto } from '../../dto/listAllRoles.dto';
-import { ListedRoleDto } from '../../dto/listedRole.dto';
-import { RepositoryListingResult } from 'src/types/modules/RepositoryListingMode';
+import { ListAllRolesDto } from '../../dto/list-roles.dto';
+import { ListedRoleDto } from '../../dto/listed-role.dto';
+import { RepositoryListingResult } from 'src/types/modules/repository-listing-mode';
 
 @Injectable()
 export class RolesTypeormRepository extends AbstractRolesRepository {

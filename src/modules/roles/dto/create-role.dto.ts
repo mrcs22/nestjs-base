@@ -7,7 +7,7 @@ import {
   ValidateNested,
   IsArray,
 } from 'class-validator';
-import { CreatePermissionDto } from './createPermission.dto';
+import { CreatePermissionDto } from './create-permission.dto';
 import { Type } from 'class-transformer';
 
 export class CreateRoleDto {

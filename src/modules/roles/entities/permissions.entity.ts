@@ -6,9 +6,9 @@ import {
     DeleteDateColumn,
     ManyToOne,
 } from 'typeorm';
-import { RolePermissionName, RolePermissionNameEnum } from 'src/types/roles/rolePermission';
-import { CreatePermissionDto } from '../dto/createPermission.dto';
-import { UpdatePermissionDto } from '../dto/updatePermission.dto';
+import { RolePermissionName, RolePermissionNameEnum } from 'src/types/roles/role-permission';
+import { CreatePermissionDto } from '../dto/create-permission.dto';
+import { UpdatePermissionDto } from '../dto/update-permission.dto';
 import { Role } from './role.entity';
 
 @Entity('permissions')
