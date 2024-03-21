@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptions } from '@nestjs/swagger';
 import { registerDecorator, ValidationOptions, ValidationArguments } from 'class-validator';
 import { GenericRelationItemDto } from 'src/utils/helpers/dto/generic-relation-item.dto';
 
-  function IsGenericRelationItem(validationOptions?: ValidationOptions) {
+function IsGenericRelationItem(validationOptions?: ValidationOptions) {
     return function (object: object, propertyName: string) {
         const defaultOptions: ValidationOptions = {
             message: `${propertyName} is invalid`,
@@ -51,33 +51,6 @@ import { GenericRelationItemDto } from 'src/utils/helpers/dto/generic-relation-i
     };
 }
 
-  function EnumFromArray(enumValues: readonly string[], validationOptions?: ValidationOptions) {
-    return function (object: Object, propertyName: string) {
-        registerDecorator({
-            name: 'ApiEnumFromArray',
-            target: object.constructor,
-            propertyName: propertyName,
-            options: validationOptions,
-            validator: {
-                validate(value: any, args: ValidationArguments) {
-                    if (!enumValues.includes(value)) {
-                        const errorMessage = `${propertyName} must be one of [${enumValues.join(', ')}]`;
-                        if (args.constraints) {
-                            throw new Error(errorMessage);
-                        }
-                        return false;
-                    }
-                    return true;
-                },
-            },
-        });
 
-        ApiProperty({
-            type: 'enum',
-            enum: enumValues,
-            example: enumValues[0],
-        })(object, propertyName);
-    };
-}
 
-export { IsGenericRelationItem, EnumFromArray };
+export { IsGenericRelationItem };
