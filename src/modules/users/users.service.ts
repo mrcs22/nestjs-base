@@ -13,6 +13,7 @@ import { hash } from 'bcrypt';
 import * as crypto from 'crypto';
 import { MailService } from '../mail/mail.service';
 import { RolesService } from '../roles/roles.service';
+import { environmentVariables } from 'src/config/environment-variables';
 
 @Injectable()
 export class UsersService {
@@ -34,15 +35,14 @@ export class UsersService {
     user.role = await this.rolesService.findById({
       id: createUserDto.role.id,
       mode: 'ensureExistence',
-    })  
+    })
 
-    const temporaryPassword = await this.addTemporaryPassword(user);
     const createdUser = await this.userRepository.create(user);
 
-    this.mailService.sendTemporyPasswordMail({
+    this.mailService.sendConfirmEmailMail({
       to: user.email,
       name: user.name,
-      temporaryPassword,
+      confirmUrl: `${environmentVariables.FRONT_URL}/login/confirm-email?email=${user.email}`,
     });
 
     return createdUser;
@@ -163,18 +163,5 @@ export class UsersService {
     user.password = await hash(password, 12);
 
     await this.userRepository.update(user);
-  }
-
-  private async addTemporaryPassword(
-    user: User,
-    passwordLength = 8,
-  ) {
-    const temporaryPassword = crypto
-      .randomBytes(4)
-      .toString('hex')
-      .substring(0, passwordLength);
-
-    user.password = await hash(temporaryPassword, 12);
-    return temporaryPassword;
   }
 }

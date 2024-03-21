@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmação de email</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+  </style>
+</head>
+
+<body style="background-color: white; opacity: 0.85; color: #000000; font-family: 'Poppins', sans-serif;">
+
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: white; border: 1px solid #bbb9b9; border-radius: 20px;">
+    <tbody>
+
+      <!-- Logo -->
+      <tr>
+        <td align="center" style="padding: 60px 0;">
+          <img src="{{logoUrl}}" alt="Logo - Fictional Company" style="display: block; width: 50%;" />
+        </td>
+      </tr>
+
+      <!-- Barra horizontal -->
+      <tr>
+        <td>
+          <hr color="#bbb9b9" style="border: 0; height: 1px; background-color: #bbb9b9;">
+        </td>
+      </tr>
+
+      <!-- Title -->
+      <tr>
+        <td style="padding: 0 20px;">
+          <strong style="font-size: 30px; color: #000000; display: block; text-align: center; margin-bottom: 20px;">
+            Olá, {{name}}
+          </strong>
+        </td>
+      </tr>
+
+      <!-- Content -->
+      <tr>
+        <td style="padding: 0 20px;">
+          <p style="font-size: 16px; line-height: 28px; margin: 0; text-align: center; color: #000000;">
+            Para confirmar se email, clique <a href="{{confirmUrl}}">aqui</a>
+          </p>
+        </td>
+      </tr>
+
+      <!-- Footer -->
+      <tr>
+        <td align="center" style="font-size: 12px; line-height: 24px; font-weight: 300; padding: 20px; border-radius: 0 0 20px 20px;">
+          <p style="color: #7e8790; margin: 0;">
+            Caso você não seja {{name}}, ignore este e-mail. É possível que outra pessoa tenha inserido seu email por engano.
+          </p>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="center" style="font-size: 14px; line-height: 24px; font-weight: 300; padding: 20px; border-bottom: 1px solid #bbb9b9; border-radius: 0 0 20px 20px;">
+          <p style="color: #7e8790; margin: 0;">
+            Enviado por Fictional Company.
+          </p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+</html>

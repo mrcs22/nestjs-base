@@ -28,6 +28,12 @@ export class User {
 
   @Column({
     type: 'varchar',
+    length: 14,
+  })
+  document: string;
+
+  @Column({
+    type: 'varchar',
     length: 255,
   })
   email: string;
@@ -35,8 +41,9 @@ export class User {
   @Column({
     type: 'varchar',
     length: 255,
+    nullable: true,
   })
-  password: string;
+  password?: string | null;
 
   @Column({ type: 'varchar', length: 255, default: '', select: false })
   notes: string;
@@ -67,5 +74,24 @@ export class User {
     this.notes = dto.notes || '';
     this.isActive = dto.isActive;
     this.email = dto.email;
+    this.document = dto.document.replace(/[^0-9]/g, '');
+
+    if ('password' in dto && dto.password !== null) {
+      this.password = dto.password  ;
+    }
+  }
+
+  public toDto(): UpdateUserDto {
+    return {
+      name: this.name,
+      notes: this.notes,
+      isActive: this.isActive,
+      email: this.email,
+      document: this.document,
+      role: {
+        id: this.role.id,
+        name: this.role.name,
+      },
+    };
   }
 }

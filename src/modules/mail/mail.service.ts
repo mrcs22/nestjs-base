@@ -20,9 +20,32 @@ export interface ISendRecoverPasswordMailParams {
   recoverUrl: string;
 }
 
+export interface ISendConfirmEmailMailParams {
+  to: string;
+  name: string;
+  confirmUrl: string;
+}
+
 @Injectable()
 export class MailService {
   constructor() {}
+
+  async sendConfirmEmailMail({
+    to,
+    name,
+    confirmUrl
+  }: ISendConfirmEmailMailParams): Promise<void> {
+    const subject = 'Confirmação de email';
+    const templatePath = `${__dirname}/../../static/mail/templates/confirm-email-mail.html`;
+
+    await this.sendMail({
+      to,
+      subject,
+      data: { name, confirmUrl },
+      templatePath,
+      attachments: [],
+    });
+  }
 
   async sendTemporyPasswordMail({
     to,

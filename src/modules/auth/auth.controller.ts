@@ -5,6 +5,7 @@ import { SignInDto } from './dto/sigin.dto';
 import { Public } from './strategy/jwt-auth.guard';
 import { RequestRecoverPasswordCodeDto } from './dto/request-recover-password-code.dto';
 import { RecoverPasswordDto } from './dto/recover-password.dto';
+import { ConfirmEmailDto } from './dto/confirm-email.dto';
 
 @ApiTags('auth')
 @Public()
@@ -16,6 +17,12 @@ export class AuthController {
   @HttpCode(200)
   signIn(@Body() signInDto: SignInDto) {
     return this.authService.signIn(signInDto);
+  }
+
+  @Post('confirm-email')
+  @HttpCode(204)
+  confirmEmail(@Body() confirmEmailDto: ConfirmEmailDto) {
+    return this.authService.confirmEmail(confirmEmailDto);
   }
 
   @Get('password/recover/code')

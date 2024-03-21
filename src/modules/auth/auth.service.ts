@@ -12,6 +12,7 @@ import { RecoverPasswordDto } from './dto/recover-password.dto';
 import AppException from 'src/exception-filters/app-exception/app-exception';
 import { UsersService } from '../users/users.service';
 import { User } from '../users/entities/user.entity';
+import { ConfirmEmailDto } from './dto/confirm-email.dto';
 
 @Injectable()
 export class AuthService {
@@ -20,7 +21,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private mailService: MailService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) {}
+  ) { }
 
   async signIn({ email, password }: SignInDto) {
     const user = await this.usersService.findByEmail({
@@ -54,6 +55,11 @@ export class AuthService {
         id: user.id,
         email: user.email,
         name: user.name,
+        role: {
+          id: user.role.id,
+          name: user.role.name,
+          permissions: user.role.permissions,
+        }
       },
       token: this.jwtService.sign(payload),
     };
@@ -64,7 +70,7 @@ export class AuthService {
       email,
     });
 
-    if (!user) {
+    if (!user || !user.password || !user.isActive) {
       return;
     }
 
@@ -130,6 +136,31 @@ export class AuthService {
     }
 
     return user;
+  }
+
+  async confirmEmail({ email, document }: ConfirmEmailDto) {
+    const user = await this.usersService.findByEmail({
+      email,
+      mode: 'ensureExistence',
+    });
+
+    const isEmailConfirmable = !!user && user.isActive && !user.password  
+    if(!isEmailConfirmable || user.document !== document) {
+      throw new AppException('Email ou documento inválido', 400);
+    }
+
+    const password = await this.addTemporaryPasswordToUser(user);
+    const updatedUserDto = user.toDto()
+
+    updatedUserDto.password = user.password
+
+    await this.usersService.update(user.id, updatedUserDto);
+
+    this.mailService.sendTemporyPasswordMail({
+      to: user.email,
+      name: user.name,
+      temporaryPassword: password,
+    });
   }
 
   generateCryptoRandomString(length: number) {

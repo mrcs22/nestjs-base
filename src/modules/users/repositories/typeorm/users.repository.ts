@@ -64,8 +64,9 @@ export class UsersTypeormRepository extends AbstractUsersRepository {
   findByName(name: string): Promise<User | null> {
     return this.usersRepository.findOne({
       where: {
-        name: name,
+        name: name,    
       },
+      relations: ['role'],
     });
   }
 
@@ -78,6 +79,8 @@ export class UsersTypeormRepository extends AbstractUsersRepository {
   }): Promise<User | null> {
     const userQb = this.usersRepository.createQueryBuilder('user');
     userQb.where('user.email = :email', { email });
+    userQb.leftJoinAndSelect('user.role', 'role');
+    userQb.leftJoinAndSelect('role.permissions', 'permissions');
 
     if (withPassword) {
       userQb.addSelect('user.password');
@@ -91,6 +94,7 @@ export class UsersTypeormRepository extends AbstractUsersRepository {
       where: {
         id,
       },
+      relations: ['role'],
     });
   }
 
