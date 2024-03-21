@@ -2,15 +2,12 @@ import { randomUUID } from 'crypto';
 import * as fs from 'fs';
 import * as multer from 'multer';
 import * as path from 'path';
-import {
-  AllowedFileMime,
-  iterableAllowedFileMimes,
-} from '../types/multer/parsed-file';
 import { environmentVariables } from './environment-variables';
 import { megabytesToBytes } from '../utils/helpers/megabytes-to-bytes';
 import { Request } from 'express';
 import AppException from 'src/exception-filters/app-exception/app-exception';
 import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
+import { AllowedFileMime, iterableAllowedFileMimes } from 'src/modules/attachments/entities/attachment.entity';
 
 const fileNameHandler = (
   _req: Request,
@@ -61,7 +58,7 @@ const fileFilter = (
   _req: Request,
   file: Express.Multer.File,
   cb: (err: Error | null, acceptFile: boolean) => void,
-) => {
+) => {  
   if (iterableAllowedFileMimes.includes(file.mimetype as AllowedFileMime)) {
     cb(null, true);
   } else {

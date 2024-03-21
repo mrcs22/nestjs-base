@@ -1,3 +1,5 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import {
   IsNotEmpty,
   IsBoolean,
@@ -28,6 +30,9 @@ export class CreateUserDto {
   email: string;
 
   @IsBoolean()
+  @Transform(({ value }) => {
+    return value && typeof value === 'string' ? JSON.parse(value) : value;
+  })
   isActive: boolean;
 
   @IsOptional()
@@ -36,4 +41,11 @@ export class CreateUserDto {
 
   @IsGenericRelationItem()
   role: GenericRelationItemDto;
+
+  @IsOptional()
+  @ApiProperty({ type: 'string', format: 'binary', nullable: true})
+  @Transform(({ value }) => {
+    return value && typeof value === 'string' ? JSON.parse(value) : value;
+  })
+  picture?: Express.Multer.File | null;
 }
