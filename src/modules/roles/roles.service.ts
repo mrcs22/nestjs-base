@@ -83,6 +83,13 @@ export class RolesService {
       );
     }
 
+    if(!existingRole?.isActive && mode === 'ensureActiveExistence') {
+      throw new AppException(
+        `Cargo inativo`,
+        HttpStatus.CONFLICT,
+      );
+    }
+
     return existingRole as FindServiceResult<Role, Mode>;
   }
 

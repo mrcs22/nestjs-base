@@ -15,11 +15,6 @@ export class $Entities$Service {
   constructor(private $entity$Repository: Abstract$Entities$Repository) {}
 
   async create(create$Entity$Dto: Create$Entity$Dto) {
-    await this.findByName({
-      name: create$Entity$Dto.name,
-      mode: 'ensureNonExistence',
-    });
-
     const $entity$ = new $Entity$();
     $entity$.fromDto(create$Entity$Dto);
 
@@ -61,30 +56,6 @@ export class $Entities$Service {
     await this.$entity$Repository.remove(id);
   }
 
-  async findByName<Mode extends FindServiceMode>(params: {
-    name: string;
-    mode?: Mode;
-  }) {
-    const { name, mode = 'default' } = params;
-    const existing$Entity$ = await this.$entity$Repository.findByName(name);
-
-    if (existing$Entity$ && mode === 'ensureNonExistence') {
-      throw new AppException(
-        `Existe outro(a) $entity_pt$ come este nome`,
-        HttpStatus.CONFLICT,
-      );
-    }
-
-    if (!existing$Entity$ && mode === 'ensureExistence') {
-      throw new AppException(
-        `Nenhum(a) $entity_pt$ com esse nome foi encontrado(a)`,
-        HttpStatus.NOT_FOUND,
-      );
-    }
-
-    return existing$Entity$ as FindServiceResult<$Entity$, Mode>;
-  }
-
   async findById<Mode extends FindServiceMode>(params: {
     id: string;
     mode?: Mode;
@@ -99,6 +70,13 @@ export class $Entities$Service {
     if (existing$Entity$ && mode === 'ensureNonExistence') {
       throw new AppException(
         `Existe outro(a) $entity_pt$ com este id`,
+        HttpStatus.CONFLICT,
+      );
+    }
+
+    if(!existing$Entity$?.isActive && mode === 'ensureActiveExistence') {
+      throw new AppException(
+        `O(a) $entity_pt$ não está ativo(a)`,
         HttpStatus.CONFLICT,
       );
     }

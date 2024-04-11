@@ -76,21 +76,6 @@ describe('$entity$Service', () => {
       const result = await $entity$Service.create(create$entity$Dto);
       expect(result).toEqual(expected$entity$);
     });
-
-    it('should throw an error if the $entity$ name already exists', async () => {
-      const create$entity$Dto = Create$Entity$DtoFactory.generate();
-
-      const $entity$ = new $Entity$();
-      $entity$.fromDto(create$entity$Dto);
-
-      jest.spyOn($entity$Repository, 'findByName').mockResolvedValue($entity$);
-
-      await expect(
-        $entity$Service.create(create$entity$Dto),
-      ).rejects.toMatchObject(
-        new AppException(`Existe outro(a) $entity_pt$ come este nome`, 409),
-      );
-    });
   });
 
   describe('listAll', () => {
@@ -218,68 +203,6 @@ describe('$entity$Service', () => {
 
       await expect($entity$Service.remove(id)).rejects.toMatchObject(
         new AppException(`$Entity_pt$ não encontrado(a)`, HttpStatus.NOT_FOUND),
-      );
-    });
-  });
-
-  describe('findByName', () => {
-    it('should return a $entity$', async () => {
-      const expected$entity$ = $Entity$Factory.generate();
-      jest
-        .spyOn($entity$Repository, 'findByName')
-        .mockResolvedValue(expected$entity$);
-
-      const result = await $entity$Service.findByName({
-        name: expected$entity$.name,
-      });
-
-      expect(result).toEqual(expected$entity$);
-    });
-
-    it('should return null if the $entity$ does not exist', async () => {
-      jest.spyOn($entity$Repository, 'findByName').mockResolvedValue(null);
-
-      const result = await $entity$Service.findByName({
-        name: faker.lorem.words(),
-      });
-
-      expect(result).toBeNull();
-    });
-
-    it('should throw an error if the $entity$ does not exist and mode is ensureExistence', async () => {
-      jest.spyOn($entity$Repository, 'findByName').mockResolvedValue(null);
-
-      const name = faker.lorem.words();
-      await expect(
-        $entity$Service.findByName({
-          name: name,
-          mode: 'ensureExistence',
-        }),
-      ).rejects.toMatchObject(
-        new AppException(
-          `Nenhum(a) $entity_pt$ com esse nome foi encontrado(a)`,
-          HttpStatus.NOT_FOUND,
-        ),
-      );
-    });
-
-    it('should throw an error if the $entity$ exists and mode is ensureNonExistence', async () => {
-      const existing$entity$ = $Entity$Factory.generate();
-      jest
-        .spyOn($entity$Repository, 'findByName')
-        .mockResolvedValue(existing$entity$);
-
-      const name = faker.lorem.words();
-      await expect(
-        $entity$Service.findByName({
-          name,
-          mode: 'ensureNonExistence',
-        }),
-      ).rejects.toMatchObject(
-        new AppException(
-          `Existe outro(a) $entity_pt$ come este nome`,
-          HttpStatus.CONFLICT,
-        ),
       );
     });
   });

@@ -10,6 +10,7 @@ export class CreateuserDtoFactory {
     const createuserDto = new CreateUserDto();
 
     createuserDto.name = faker.lorem.words();
+    createuserDto.document = faker.lorem.words();
     createuserDto.isActive = faker.datatype.boolean();
     createuserDto.notes = faker.lorem.words();
 
@@ -29,6 +30,7 @@ export class UpdateuserDtoFactory {
 
     updateuserDto.name = faker.lorem.words();
     updateuserDto.isActive = faker.datatype.boolean();
+    updateuserDto.document = faker.lorem.words();
     updateuserDto.notes = faker.lorem.words();
 
     const role = RoleFactory.generate();
@@ -46,6 +48,7 @@ export class UserFactory {
     const user = new User();
     user.id = faker.string.uuid();
     user.name = faker.lorem.words();
+    user.document = faker.lorem.words();
     user.isActive = faker.datatype.boolean();
     user.notes = faker.lorem.words();
     user.createdAt = faker.date.recent();
