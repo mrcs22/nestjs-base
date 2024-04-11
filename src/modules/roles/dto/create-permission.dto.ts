@@ -1,7 +1,8 @@
-import { IsBoolean, IsIn, ValidateIf } from 'class-validator';
+import { IsBoolean, IsIn, IsString, ValidateIf } from 'class-validator';
 import { RolePermissionName, iterableRolePermissionNames } from 'src/types/roles/role-permission';
 
 export class CreatePermissionDto {
+  @IsString()  
   @IsIn(iterableRolePermissionNames)
   name: RolePermissionName;
 
