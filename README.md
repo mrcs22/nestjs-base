@@ -1,6 +1,11 @@
 # NestJS Base Project Template
 ### This project serves as a template for a base project using NestJS.
 
+### TO DO
+- [ ] Export mocked module to simplify tests setup 
+- [ ] Add user picture ralation and handle picture upload
+
+
 #### Setup
 To set up the project, follow these steps:
 
