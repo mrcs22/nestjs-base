@@ -152,7 +152,7 @@ export class AuthService {
     const password = await this.addTemporaryPasswordToUser(user);
     const updatedUserDto = user.toDto()
 
-    updatedUserDto.password = user.password
+    updatedUserDto.data.password = user.password
 
     await this.usersService.update(user.id, updatedUserDto);
 

@@ -11,6 +11,7 @@ import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { Role } from 'src/modules/roles/entities/role.entity';
 
+
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn('uuid')
@@ -65,33 +66,35 @@ export class User {
   @DeleteDateColumn({ select: false })
   deletedAt?: Date;
 
-  @ManyToOne(() => Role, {eager: true})
-  @JoinColumn({ name: 'role_id',  })
+  @ManyToOne(() => Role, { eager: true })
+  @JoinColumn({ name: 'role_id', })
   role: Role;
 
   public fromDto(dto: CreateUserDto | UpdateUserDto): void {
-    this.name = dto.name;
-    this.notes = dto.notes || '';
-    this.isActive = dto.isActive;
-    this.email = dto.email;
-    this.document = dto.document.replace(/[^0-9]/g, '');
+    this.name = dto.data.name;
+    this.notes = dto.data.notes || '';
+    this.isActive = dto.data.isActive;
+    this.email = dto.data.email;
+    this.document = dto.data.document.replace(/[^0-9]/g, '');
 
-    if ('password' in dto && dto.password !== null) {
-      this.password = dto.password  ;
+    if ('password' in dto.data && dto.data.password !== null) {
+      this.password = dto.data.password;
     }
   }
 
   public toDto(): UpdateUserDto {
     return {
-      name: this.name,
-      notes: this.notes,
-      isActive: this.isActive,
-      email: this.email,
-      document: this.document,
-      role: {
-        id: this.role.id,
-        name: this.role.name,
-      },
+      data: {
+        name: this.name,
+        notes: this.notes,
+        isActive: this.isActive,
+        email: this.email,
+        document: this.document,
+        role: {
+          id: this.role.id,
+          name: this.role.name,
+        },
+      }
     };
   }
 }

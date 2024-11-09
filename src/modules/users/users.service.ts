@@ -25,7 +25,7 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto) {
     await this.findByName({
-      name: createUserDto.name,
+      name: createUserDto.data.name,
       mode: 'ensureNonExistence',
     });
 
@@ -33,7 +33,7 @@ export class UsersService {
     user.fromDto(createUserDto);
 
     user.role = await this.rolesService.findById({
-      id: createUserDto.role.id,
+      id: createUserDto.data.role.id,
       mode: 'ensureExistence',
     })
 
@@ -59,7 +59,7 @@ export class UsersService {
     const user = await this.findById({ id, mode: 'ensureExistence' });
 
     const existingUserWithName = await this.userRepository.findByName(
-      updateUserDto.name,
+      updateUserDto.data.name,
     );
 
     if (existingUserWithName && existingUserWithName.id !== id) {
@@ -71,7 +71,7 @@ export class UsersService {
 
     user.fromDto(updateUserDto);
     user.role = await this.rolesService.findById({
-      id: updateUserDto.role.id,
+      id: updateUserDto.data.role.id,
       mode: 'ensureExistence',
     })
 

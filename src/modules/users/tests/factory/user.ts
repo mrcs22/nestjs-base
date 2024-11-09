@@ -9,15 +9,15 @@ export class CreateuserDtoFactory {
   static generate(): CreateUserDto {
     const createuserDto = new CreateUserDto();
 
-    createuserDto.name = faker.lorem.words();
-    createuserDto.document = faker.lorem.words();
-    createuserDto.isActive = faker.datatype.boolean();
-    createuserDto.notes = faker.lorem.words();
-
     const role = RoleFactory.generate();
-    createuserDto.role = {
-      id: role.id,
-      name: role.name,
+
+    createuserDto.data = {
+      name: faker.lorem.words(),
+      document: faker.lorem.words(),
+      isActive: faker.datatype.boolean(),
+      notes: faker.lorem.words(),
+      email: faker.internet.email(),
+      role
     }
 
     return createuserDto;
@@ -28,15 +28,15 @@ export class UpdateuserDtoFactory {
   static generate(): UpdateUserDto {
     const updateuserDto = new UpdateUserDto();
 
-    updateuserDto.name = faker.lorem.words();
-    updateuserDto.isActive = faker.datatype.boolean();
-    updateuserDto.document = faker.lorem.words();
-    updateuserDto.notes = faker.lorem.words();
-
     const role = RoleFactory.generate();
-    updateuserDto.role = {
-      id: role.id,
-      name: role.name,
+
+    updateuserDto.data = {
+      name: faker.lorem.words(),
+      document: faker.lorem.words(),
+      isActive: faker.datatype.boolean(),
+      notes: faker.lorem.words(),
+      email: faker.internet.email(),
+      role
     }
 
     return updateuserDto;

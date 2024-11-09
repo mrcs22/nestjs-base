@@ -59,7 +59,7 @@ describe('userService', () => {
   describe('create', () => {
     it('should create a new active user', async () => {
       const createuserDto = CreateuserDtoFactory.generate();
-      createuserDto.isActive = true;
+      createuserDto.data.isActive = true;
 
       jest.spyOn(userRepository, 'findByName').mockResolvedValue(null);
 
@@ -76,7 +76,7 @@ describe('userService', () => {
 
     it('should create a new inactive user', async () => {
       const createuserDto = CreateuserDtoFactory.generate();
-      createuserDto.isActive = false;
+      createuserDto.data.isActive = false;
 
       jest.spyOn(userRepository, 'findByName').mockResolvedValue(null);
 
