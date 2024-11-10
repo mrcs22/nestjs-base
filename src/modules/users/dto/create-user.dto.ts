@@ -6,7 +6,6 @@ import {
   IsOptional,
   IsString,
   Length,
-  isEmail,
   IsEmail,
   MinLength,
   MaxLength,
@@ -31,9 +30,6 @@ export class CreateUserDataDto {
   email: string;
 
   @IsBoolean()
-  @Transform(({ value }) => {
-    return value && typeof value === 'string' ? JSON.parse(value) : value;
-  })
   isActive: boolean;
 
   @IsOptional()
@@ -41,18 +37,17 @@ export class CreateUserDataDto {
   notes?: string;
 
   @IsGenericRelationItem()
+  @ValidateNested()
+  @Type(() => GenericRelationItemDto)
   role: GenericRelationItemDto;
 }
 
 export class CreateUserDto {
   @ValidateNested()
-  @Type(()=>CreateUserDataDto)
-  data: CreateUserDataDto
+  @Type(() => CreateUserDataDto)
+  data: CreateUserDataDto;
 
   @IsOptional()
-  @ApiProperty({ type: 'string', format: 'binary', nullable: true})
-  @Transform(({ value }) => {
-    return value && typeof value === 'string' ? JSON.parse(value) : value;
-  })
+  @ApiProperty({ type: 'string', format: 'binary', nullable: true })
   picture?: Express.Multer.File | null;
 }

@@ -25,9 +25,9 @@ import { AutenticatedJwtUser } from 'src/types/modules/auth/signin-jwt-payload';
 import { RequiredPermission } from 'src/modules/auth/strategy/roles.guard';
 import { ListedUserDto } from './dto/listed-user.dto';
 import { RolePermissionName } from 'src/types/roles/role-permission';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { DeleteFileOnErrorFilter } from 'src/exception-filters/delete-file-on-error.filter';
 import multerConfig from 'src/config/multer';
+import { CustomFileInterceptor } from 'src/common/interceptors/custom-file-interceptor';
 
 const requiredPermission: RolePermissionName =
   'users';
@@ -38,7 +38,7 @@ export class UsersController {
   constructor(private readonly userService: UsersService) {}
  
   @Post()
-  @UseInterceptors(FileInterceptor('picture', multerConfig))
+  @UseInterceptors(CustomFileInterceptor('picture', multerConfig))
   @UseFilters(DeleteFileOnErrorFilter)
   @ApiConsumes('multipart/form-data')
   @RequiredPermission('users', 'create')
@@ -76,11 +76,16 @@ export class UsersController {
   }
 
   @Put(':id')
+  @UseInterceptors(CustomFileInterceptor('picture', multerConfig))
+  @UseFilters(DeleteFileOnErrorFilter)
+  @ApiConsumes('multipart/form-data')
   @RequiredPermission(requiredPermission, 'update')
   update(
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
+    @UploadedFile() picture: Express.Multer.File,
   ) {
+    if(picture) updateUserDto.picture = picture;  
     return this.userService.update(id, updateUserDto);
   }
 

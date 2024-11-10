@@ -38,7 +38,6 @@ export class AppExceptionFilter implements ExceptionFilter {
               : err.name,
       });
     }
-
     console.error(err);
     response.status(500).json({
       status: err.statusCode,

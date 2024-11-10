@@ -24,8 +24,9 @@ export class UsersService {
   ) { }
 
   async create(createUserDto: CreateUserDto) {
-    await this.findByName({
-      name: createUserDto.data.name,
+    
+    await this.findByEmail({
+      email: createUserDto.data.email,
       mode: 'ensureNonExistence',
     });
 
