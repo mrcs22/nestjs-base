@@ -10,6 +10,7 @@ import {
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { Role } from 'src/modules/roles/entities/role.entity';
+import { Attachment } from 'src/modules/attachments/entities/attachment.entity';
 
 
 @Entity('users')
@@ -43,6 +44,7 @@ export class User {
     type: 'varchar',
     length: 255,
     nullable: true,
+    select: false
   })
   password?: string | null;
 
@@ -69,6 +71,10 @@ export class User {
   @ManyToOne(() => Role, { eager: true })
   @JoinColumn({ name: 'role_id', })
   role: Role;
+
+  @ManyToOne(() => Attachment, { eager: true, nullable: true })
+  @JoinColumn({ name: 'picture_id', })
+  picture: Attachment | null;
 
   public fromDto(dto: CreateUserDto | UpdateUserDto): void {
     this.name = dto.data.name;

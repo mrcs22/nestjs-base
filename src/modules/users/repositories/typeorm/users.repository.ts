@@ -5,6 +5,7 @@ import { AbstractUsersRepository } from '../abstract.users.repository';
 import { ListAllUsersDto } from '../../dto/list-users.dto';
 import { ListedUserDto } from '../../dto/listed-user.dto';
 import { RepositoryListingResult } from 'src/types/modules/repository-listing-mode';
+import { Attachment } from 'src/modules/attachments/entities/attachment.entity';
 
 @Injectable()
 export class UsersTypeormRepository extends AbstractUsersRepository {
@@ -19,7 +20,14 @@ export class UsersTypeormRepository extends AbstractUsersRepository {
   }
 
   public async create(user: User) {
-    return await this.usersRepository.save(user);
+    return this.entityManager.transaction(async transactionManager => {
+      const pictureSavedAttachment = user.picture ?
+        await transactionManager.save(user.picture) : null
+
+      user.picture = pictureSavedAttachment
+
+      return await transactionManager.save(user);
+    })
   }
 
   async listAll<Simplified extends boolean>(
@@ -64,7 +72,7 @@ export class UsersTypeormRepository extends AbstractUsersRepository {
   findByName(name: string): Promise<User | null> {
     return this.usersRepository.findOne({
       where: {
-        name: name,    
+        name: name,
       },
       relations: ['role'],
     });
@@ -99,7 +107,26 @@ export class UsersTypeormRepository extends AbstractUsersRepository {
   }
 
   update(user: User): Promise<User> {
-    return this.usersRepository.save(user);
+    return this.entityManager.transaction(async transactionManager => {
+
+      let pictureSavedAttachment: Attachment | null = user.picture
+      if (user.picture && !user.picture.id) {
+        pictureSavedAttachment = await transactionManager.save(user.picture)
+      }
+
+      user.picture = pictureSavedAttachment
+      const savedUser = await transactionManager.save(user);
+
+      if (user.picture === null) {
+        await transactionManager.getRepository(Attachment).softDelete({
+          users: {
+            id: user.id
+          }
+        })
+      }
+
+      return savedUser
+    })
   }
 
   async remove(id: string): Promise<void> {

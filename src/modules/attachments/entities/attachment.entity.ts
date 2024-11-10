@@ -1,4 +1,5 @@
 import { environmentVariables } from 'src/config/environment-variables';
+import { User } from 'src/modules/users/entities/user.entity';
 import { deleteFile } from 'src/utils/helpers/delete-file';
 import {
     Entity,
@@ -6,6 +7,7 @@ import {
     Column,
     PrimaryColumn,
     DeleteDateColumn,
+    OneToMany,
 } from 'typeorm';
 
 export const iterableAllowedFileMimes = [
@@ -92,6 +94,9 @@ export class Attachment {
 
     @DeleteDateColumn({ select: false })
     deletedAt?: Date;
+
+    @OneToMany(() => User, user => user.picture)
+    users: User[]
 
     public fromFile(file: Express.Multer.File) {
         this.fieldname = file.fieldname;

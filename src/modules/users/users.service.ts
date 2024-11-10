@@ -14,6 +14,7 @@ import * as crypto from 'crypto';
 import { MailService } from '../mail/mail.service';
 import { RolesService } from '../roles/roles.service';
 import { environmentVariables } from 'src/config/environment-variables';
+import { Attachment } from '../attachments/entities/attachment.entity';
 
 @Injectable()
 export class UsersService {
@@ -24,7 +25,13 @@ export class UsersService {
   ) { }
 
   async create(createUserDto: CreateUserDto) {
-    
+    let profilePicture: Attachment | null = null
+
+    if (createUserDto.picture) {
+      profilePicture = new Attachment()
+      profilePicture.fromFile(createUserDto.picture)
+    }
+
     await this.findByEmail({
       email: createUserDto.data.email,
       mode: 'ensureNonExistence',
@@ -32,6 +39,7 @@ export class UsersService {
 
     const user = new User();
     user.fromDto(createUserDto);
+    user.picture = profilePicture
 
     user.role = await this.rolesService.findById({
       id: createUserDto.data.role.id,
@@ -57,26 +65,54 @@ export class UsersService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    const user = await this.findById({ id, mode: 'ensureExistence' });
+    let profilePicture: Attachment | null = null
 
-    const existingUserWithName = await this.userRepository.findByName(
-      updateUserDto.data.name,
-    );
-
-    if (existingUserWithName && existingUserWithName.id !== id) {
-      throw new AppException(
-        `Existe outro cadastro come este nome`,
-        HttpStatus.CONFLICT,
-      );
+    if (updateUserDto.picture) {
+      profilePicture = new Attachment()
+      profilePicture.fromFile(updateUserDto.picture)
     }
+
+    const user = await this.findById({ id, mode: 'ensureExistence' });
+    
+    const isEmailUpdate = user.email !== updateUserDto.data.email
+    if (isEmailUpdate) {
+      const existingUserWithEmail = await this.userRepository.findByEmail(
+        { email: updateUserDto.data.email, }
+      );
+
+      if (existingUserWithEmail && existingUserWithEmail.id !== id) {
+        throw new AppException(
+          `Existe outro cadastro com este email`,
+          HttpStatus.CONFLICT,
+        );
+      }
+    }
+
 
     user.fromDto(updateUserDto);
     user.role = await this.rolesService.findById({
       id: updateUserDto.data.role.id,
       mode: 'ensureExistence',
     })
+    if (profilePicture) user.picture = profilePicture
 
-    return await this.userRepository.update(user);
+    const shouldDeleteCurrentPicture = updateUserDto.picture === null
+    if (shouldDeleteCurrentPicture && user.picture) {
+      user.picture.deletePhysicalFile()
+      user.picture = null
+    }
+
+    const updatedUser = await this.userRepository.update(user);
+
+    if (user.email && isEmailUpdate) {
+      this.mailService.sendConfirmEmailMail({
+        to: user.email,
+        name: user.name,
+        confirmUrl: `${environmentVariables.FRONT_URL}/login/confirm-email?email=marcusmoraes2010@hotmail.com`
+      })
+    }
+
+    return updatedUser
   }
 
   async remove(id: string) {
