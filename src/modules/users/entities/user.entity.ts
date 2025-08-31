@@ -11,6 +11,7 @@ import { CreateUserDto } from "../dto/create-user.dto";
 import { UpdateUserDto } from "../dto/update-user.dto";
 import { Role } from "src/modules/roles/entities/role.entity";
 import { Attachment } from "src/modules/attachments/entities/attachment.entity";
+import { hashSync } from "bcrypt";
 
 @Entity("users")
 export class User {
@@ -82,12 +83,15 @@ export class User {
     this.email = dto.data.email;
     this.document = dto.data.document.replace(/[^0-9]/g, "");
 
-    if(dto.picture === undefined ){
+    if (dto.picture === undefined) {
       this.picture = undefined
     }
 
-    if ("password" in dto.data && dto.data.password !== null) {
-      this.password = dto.data.password;
+    if ("password" in dto.data) {
+      const password = dto.data.password
+
+      if (password)
+        this.password = hashSync(password, 10);
     }
   }
 
