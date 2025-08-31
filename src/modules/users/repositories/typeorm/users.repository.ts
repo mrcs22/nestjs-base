@@ -109,7 +109,7 @@ export class UsersTypeormRepository extends AbstractUsersRepository {
 
   update(user: User): Promise<User> {
     return this.entityManager.transaction(async (transactionManager) => {
-      let pictureSavedAttachment: Attachment | null = user.picture;
+      let pictureSavedAttachment: Attachment | null | undefined = user.picture;
       if (user.picture && !user.picture.id) {
         pictureSavedAttachment = await transactionManager.save(user.picture);
       }

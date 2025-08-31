@@ -73,7 +73,7 @@ export class User {
 
   @ManyToOne(() => Attachment, { eager: true, nullable: true })
   @JoinColumn({ name: "picture_id" })
-  picture: Attachment | null;
+  picture?: Attachment | null;
 
   public fromDto(dto: CreateUserDto | UpdateUserDto): void {
     this.name = dto.data.name;
@@ -81,6 +81,10 @@ export class User {
     this.isActive = dto.data.isActive;
     this.email = dto.data.email;
     this.document = dto.data.document.replace(/[^0-9]/g, "");
+
+    if(dto.picture === undefined ){
+      this.picture = undefined
+    }
 
     if ("password" in dto.data && dto.data.password !== null) {
       this.password = dto.data.password;

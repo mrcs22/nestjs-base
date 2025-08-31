@@ -88,6 +88,7 @@ export class UsersService {
     }
 
     user.fromDto(updateUserDto);
+
     user.role = await this.rolesService.findById({
       id: updateUserDto.data.role.id,
       mode: "ensureExistence",
@@ -100,7 +101,9 @@ export class UsersService {
       user.picture = null;
     }
 
+
     const updatedUser = await this.userRepository.update(user);
+
 
     if (user.email && isEmailUpdate) {
       this.mailService.sendConfirmEmailMail({
