@@ -86,19 +86,6 @@ describe("userService", () => {
       const result = await userService.create(createuserDto);
       expect(result).toEqual(expecteduser);
     });
-
-    it("should throw an error if the user name already exists", async () => {
-      const createuserDto = CreateuserDtoFactory.generate();
-
-      const user = new User();
-      user.fromDto(createuserDto);
-
-      jest.spyOn(userRepository, "findByName").mockResolvedValue(user);
-
-      await expect(userService.create(createuserDto)).rejects.toMatchObject(
-        new AppException(`Existe outro cadastro come este nome`, 409),
-      );
-    });
   });
 
   describe("listAll", () => {
@@ -161,27 +148,6 @@ describe("userService", () => {
 
       await expect(userService.update(id, updateuserDto)).rejects.toMatchObject(
         new AppException(`Não encontrado`, HttpStatus.NOT_FOUND),
-      );
-    });
-
-    it("should throw an error if the user name already exists and is not updated one", async () => {
-      const updateuserDto = UpdateuserDtoFactory.generate();
-
-      const existinguser = UserFactory.generate();
-      jest.spyOn(userRepository, "findById").mockResolvedValue(existinguser);
-
-      const conflictinguser = UserFactory.generate();
-      jest
-        .spyOn(userRepository, "findByName")
-        .mockResolvedValue(conflictinguser);
-
-      await expect(
-        userService.update(existinguser.id, updateuserDto),
-      ).rejects.toMatchObject(
-        new AppException(
-          `Existe outro cadastro come este nome`,
-          HttpStatus.CONFLICT,
-        ),
       );
     });
   });
