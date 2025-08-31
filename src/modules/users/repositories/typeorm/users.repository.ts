@@ -89,6 +89,7 @@ export class UsersTypeormRepository extends AbstractUsersRepository {
     const userQb = this.usersRepository.createQueryBuilder("user");
     userQb.where("user.email = :email", { email });
     userQb.leftJoinAndSelect("user.role", "role");
+    userQb.leftJoinAndSelect("user.picture", "picture");
     userQb.leftJoinAndSelect("role.permissions", "permissions");
 
     if (withPassword) {
@@ -103,7 +104,7 @@ export class UsersTypeormRepository extends AbstractUsersRepository {
       where: {
         id,
       },
-      relations: ["role"],
+      relations: ["role", "picture"],
     });
   }
 
