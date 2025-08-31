@@ -1,8 +1,6 @@
-import { RolePermissionOptions } from './role-permission-options';
+import { RolePermissionOptions } from "./role-permission-options";
 
-export const iterableRolePermissionNames = [
-  'users', 'roles'
-] as const;
+export const iterableRolePermissionNames = ["users", "roles"] as const;
 
 export type RolePermissionName = (typeof iterableRolePermissionNames)[number];
 
@@ -12,15 +10,16 @@ export const RolePermissionNameEnum = Object.freeze(
       acc[name] = name;
       return acc;
     },
-    {} as Record<RolePermissionName, RolePermissionName>
-  )  
+    {} as Record<RolePermissionName, RolePermissionName>,
+  ),
 );
 
 export type RolePermissions = {
   [key in (typeof iterableRolePermissionNames)[number]]: RolePermissionOptions;
 };
 
-export const iterableRoleReadonlyPermissionNames: RolePermissionName[] = [] as const;
+export const iterableRoleReadonlyPermissionNames: RolePermissionName[] =
+  [] as const;
 
 export type ReadonlyRolePermissionName =
   (typeof iterableRoleReadonlyPermissionNames)[number];

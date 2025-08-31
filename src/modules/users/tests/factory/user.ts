@@ -1,9 +1,9 @@
-import { faker } from '@faker-js/faker';
-import { CreateUserDto } from '../../dto/create-user.dto';
-import { UpdateUserDto } from '../../dto/update-user.dto';
-import { User } from '../../entities/user.entity';
-import { ListedUserDto } from '../../dto/listed-user.dto';
-import { CreateroleDtoFactory, RoleFactory } from 'src/modules/roles/tests/factory/role';
+import { faker } from "@faker-js/faker";
+import { CreateUserDto } from "../../dto/create-user.dto";
+import { UpdateUserDto } from "../../dto/update-user.dto";
+import { User } from "../../entities/user.entity";
+import { ListedUserDto } from "../../dto/listed-user.dto";
+import { RoleFactory } from "src/modules/roles/tests/factory/role";
 
 export class CreateuserDtoFactory {
   static generate(): CreateUserDto {
@@ -17,8 +17,8 @@ export class CreateuserDtoFactory {
       isActive: faker.datatype.boolean(),
       notes: faker.lorem.words(),
       email: faker.internet.email(),
-      role
-    }
+      role,
+    };
 
     return createuserDto;
   }
@@ -36,8 +36,8 @@ export class UpdateuserDtoFactory {
       isActive: faker.datatype.boolean(),
       notes: faker.lorem.words(),
       email: faker.internet.email(),
-      role
-    }
+      role,
+    };
 
     return updateuserDto;
   }

@@ -6,9 +6,9 @@ import {
   Length,
   ValidateNested,
   IsArray,
-} from 'class-validator';
-import { CreatePermissionDto } from './create-permission.dto';
-import { Type } from 'class-transformer';
+} from "class-validator";
+import { CreatePermissionDto } from "./create-permission.dto";
+import { Type } from "class-transformer";
 
 export class CreateRoleDto {
   @IsNotEmpty()
@@ -25,6 +25,6 @@ export class CreateRoleDto {
 
   @IsArray()
   @Type(() => CreatePermissionDto)
-  @ValidateNested({each:true})
+  @ValidateNested({ each: true })
   permissions: CreatePermissionDto[];
 }

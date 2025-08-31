@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { Transform, Type } from 'class-transformer';
+import { ApiProperty } from "@nestjs/swagger";
+import { Type } from "class-transformer";
 import {
   IsNotEmpty,
   IsBoolean,
@@ -10,9 +10,9 @@ import {
   MinLength,
   MaxLength,
   ValidateNested,
-} from 'class-validator';
-import { IsGenericRelationItem } from 'src/lib/swagger/validations';
-import { GenericRelationItemDto } from 'src/utils/helpers/dto/generic-relation-item.dto';
+} from "class-validator";
+import { IsGenericRelationItem } from "src/lib/swagger/validations";
+import { GenericRelationItemDto } from "src/utils/helpers/dto/generic-relation-item.dto";
 
 export class CreateUserDataDto {
   @IsNotEmpty()
@@ -48,6 +48,6 @@ export class CreateUserDto {
   data: CreateUserDataDto;
 
   @IsOptional()
-  @ApiProperty({ type: 'string', format: 'binary', nullable: true })
+  @ApiProperty({ type: "string", format: "binary", nullable: true })
   picture?: Express.Multer.File | null;
 }

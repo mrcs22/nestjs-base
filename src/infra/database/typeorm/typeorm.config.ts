@@ -1,13 +1,13 @@
-import { environmentVariables } from '../../../config/environment-variables';
-import { DataSource, DataSourceOptions } from 'typeorm';
-import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
+import { environmentVariables } from "../../../config/environment-variables";
+import { DataSource, DataSourceOptions } from "typeorm";
+import { MysqlConnectionOptions } from "typeorm/driver/mysql/MysqlConnectionOptions";
 
 const dbDataSourceOptions: DataSourceOptions = {
-  type: environmentVariables.STORAGE_TYPE as MysqlConnectionOptions['type'],
+  type: environmentVariables.STORAGE_TYPE as MysqlConnectionOptions["type"],
   url: environmentVariables.DATABASE_URL,
-  entities: [ './**/*.entity{ .ts,.js}'],
-  migrations: [__dirname + '/migrations/*{.ts,.js}'],
-  migrationsTableName: 'db_migrations_typeorm',
+  entities: ["./**/*.entity{ .ts,.js}"],
+  migrations: [__dirname + "/migrations/*{.ts,.js}"],
+  migrationsTableName: "db_migrations_typeorm",
   synchronize: false,
   migrationsRun: false,
 };

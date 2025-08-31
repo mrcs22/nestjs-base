@@ -6,62 +6,61 @@ import {
   DeleteDateColumn,
   ManyToOne,
   JoinColumn,
-} from 'typeorm';
-import { CreateUserDto } from '../dto/create-user.dto';
-import { UpdateUserDto } from '../dto/update-user.dto';
-import { Role } from 'src/modules/roles/entities/role.entity';
-import { Attachment } from 'src/modules/attachments/entities/attachment.entity';
+} from "typeorm";
+import { CreateUserDto } from "../dto/create-user.dto";
+import { UpdateUserDto } from "../dto/update-user.dto";
+import { Role } from "src/modules/roles/entities/role.entity";
+import { Attachment } from "src/modules/attachments/entities/attachment.entity";
 
-
-@Entity('users')
+@Entity("users")
 export class User {
-  @PrimaryGeneratedColumn('uuid')
-  @PrimaryColumn({ type: 'varchar', length: 36 })
+  @PrimaryGeneratedColumn("uuid")
+  @PrimaryColumn({ type: "varchar", length: 36 })
   id: string;
 
   @Column({
-    type: 'varchar',
+    type: "varchar",
     length: 255,
   })
   name: string;
 
-  @Column({ name: 'is_active', default: true })
+  @Column({ name: "is_active", default: true })
   isActive: boolean;
 
   @Column({
-    type: 'varchar',
+    type: "varchar",
     length: 14,
   })
   document: string;
 
   @Column({
-    type: 'varchar',
+    type: "varchar",
     length: 255,
   })
   email: string;
 
   @Column({
-    type: 'varchar',
+    type: "varchar",
     length: 255,
     nullable: true,
-    select: false
+    select: false,
   })
   password?: string | null;
 
-  @Column({ type: 'varchar', length: 255, default: '', select: false })
+  @Column({ type: "varchar", length: 255, default: "", select: false })
   notes: string;
 
   @Column({
-    name: 'created_at',
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP',
+    name: "created_at",
+    type: "timestamp",
+    default: () => "CURRENT_TIMESTAMP",
   })
   createdAt: Date;
 
   @Column({
-    name: 'updated_at',
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP',
+    name: "updated_at",
+    type: "timestamp",
+    default: () => "CURRENT_TIMESTAMP",
   })
   updatedAt: Date;
 
@@ -69,21 +68,21 @@ export class User {
   deletedAt?: Date;
 
   @ManyToOne(() => Role, { eager: true })
-  @JoinColumn({ name: 'role_id', })
+  @JoinColumn({ name: "role_id" })
   role: Role;
 
   @ManyToOne(() => Attachment, { eager: true, nullable: true })
-  @JoinColumn({ name: 'picture_id', })
+  @JoinColumn({ name: "picture_id" })
   picture: Attachment | null;
 
   public fromDto(dto: CreateUserDto | UpdateUserDto): void {
     this.name = dto.data.name;
-    this.notes = dto.data.notes || '';
+    this.notes = dto.data.notes || "";
     this.isActive = dto.data.isActive;
     this.email = dto.data.email;
-    this.document = dto.data.document.replace(/[^0-9]/g, '');
+    this.document = dto.data.document.replace(/[^0-9]/g, "");
 
-    if ('password' in dto.data && dto.data.password !== null) {
+    if ("password" in dto.data && dto.data.password !== null) {
       this.password = dto.data.password;
     }
   }
@@ -100,7 +99,7 @@ export class User {
           id: this.role.id,
           name: this.role.name,
         },
-      }
+      },
     };
   }
 }

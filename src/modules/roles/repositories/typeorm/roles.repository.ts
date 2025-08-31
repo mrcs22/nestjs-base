@@ -1,10 +1,10 @@
-import { DataSource, EntityManager, Repository } from 'typeorm';
-import { Injectable } from '@nestjs/common';
-import { Role } from '../../entities/role.entity';
-import { AbstractRolesRepository } from '../abstract.roles.repository';
-import { ListAllRolesDto } from '../../dto/list-roles.dto';
-import { ListedRoleDto } from '../../dto/listed-role.dto';
-import { RepositoryListingResult } from 'src/types/modules/repository-listing-mode';
+import { DataSource, EntityManager, Repository } from "typeorm";
+import { Injectable } from "@nestjs/common";
+import { Role } from "../../entities/role.entity";
+import { AbstractRolesRepository } from "../abstract.roles.repository";
+import { ListAllRolesDto } from "../../dto/list-roles.dto";
+import { ListedRoleDto } from "../../dto/listed-role.dto";
+import { RepositoryListingResult } from "src/types/modules/repository-listing-mode";
 
 @Injectable()
 export class RolesTypeormRepository extends AbstractRolesRepository {
@@ -23,19 +23,19 @@ export class RolesTypeormRepository extends AbstractRolesRepository {
   }
 
   async listAll<Simplified extends boolean>(
-    { page, limit, order = 'desc', query, isActive }: ListAllRolesDto,
+    { page, limit, order = "desc", query, isActive }: ListAllRolesDto,
     simplified: Simplified,
   ) {
-    const roleQb = this.rolesRepository.createQueryBuilder('role');
+    const roleQb = this.rolesRepository.createQueryBuilder("role");
 
     if (isActive !== undefined) {
-      roleQb.andWhere('role.isActive = :isActive', {
+      roleQb.andWhere("role.isActive = :isActive", {
         isActive,
       });
     }
 
     if (query) {
-      roleQb.andWhere('role.name LIKE :query', {
+      roleQb.andWhere("role.name LIKE :query", {
         query: `%${query}%`,
       });
     }
@@ -45,13 +45,13 @@ export class RolesTypeormRepository extends AbstractRolesRepository {
       roleQb.take(limit);
     }
 
-    const listingOrder = order.toUpperCase() as 'ASC' | 'DESC';
+    const listingOrder = order.toUpperCase() as "ASC" | "DESC";
 
-    roleQb.orderBy('role.createdAt', listingOrder);
+    roleQb.orderBy("role.createdAt", listingOrder);
 
-    let selectFields = ['role.id', 'role.name', 'role.createdAt'];
+    let selectFields = ["role.id", "role.name", "role.createdAt"];
     if (!simplified) {
-      selectFields = ['role'];
+      selectFields = ["role"];
     }
 
     roleQb.select(selectFields);

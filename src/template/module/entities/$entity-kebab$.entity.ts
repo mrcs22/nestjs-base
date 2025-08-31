@@ -4,39 +4,39 @@ import {
   Column,
   PrimaryColumn,
   DeleteDateColumn,
-} from 'typeorm';
-import { Create$Entity$Dto } from '../dto/create-$entity-kebab$.dto';
-import { Update$Entity$Dto } from '../dto/update-$entity-kebab$.dto';
+} from "typeorm";
+import { Create$Entity$Dto } from "../dto/create-$entity-kebab$.dto";
+import { Update$Entity$Dto } from "../dto/update-$entity-kebab$.dto";
 
 //@Entity()
 export class $Entity$ {
-  @PrimaryGeneratedColumn('uuid')
-  @PrimaryColumn({ type: 'varchar', length: 36 })
+  @PrimaryGeneratedColumn("uuid")
+  @PrimaryColumn({ type: "varchar", length: 36 })
   id: string;
 
   @Column({
-    type: 'varchar',
+    type: "varchar",
     length: 255,
   })
   name: string;
 
-  @Column({ name: 'is_active', default: true })
+  @Column({ name: "is_active", default: true })
   isActive: boolean;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: "varchar", length: 255 })
   notes: string;
 
   @Column({
-    name: 'created_at',
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP',
+    name: "created_at",
+    type: "timestamp",
+    default: () => "CURRENT_TIMESTAMP",
   })
   createdAt: Date;
 
   @Column({
-    name: 'updated_at',
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP',
+    name: "updated_at",
+    type: "timestamp",
+    default: () => "CURRENT_TIMESTAMP",
   })
   updatedAt: Date;
 
@@ -45,7 +45,7 @@ export class $Entity$ {
 
   public fromDto(dto: Create$Entity$Dto | Update$Entity$Dto): void {
     this.name = dto.name;
-    this.notes = dto.notes || '';
+    this.notes = dto.notes || "";
     this.isActive = dto.isActive;
   }
 }

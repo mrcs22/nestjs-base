@@ -19,8 +19,8 @@ class MailAttachment {
   }: IMailAttachmentProps) {
     this.name = name;
     this.path = path;
-    this.fileExtension = fileExtension || 'pdf';
-    this.contentType = contentType || 'application/pdf';
+    this.fileExtension = fileExtension || "pdf";
+    this.contentType = contentType || "application/pdf";
   }
 }
 

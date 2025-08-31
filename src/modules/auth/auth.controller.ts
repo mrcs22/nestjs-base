@@ -1,31 +1,31 @@
-import { Body, Controller, Get, HttpCode, Post, Query } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { ApiTags } from '@nestjs/swagger';
-import { SignInDto } from './dto/sigin.dto';
-import { Public } from './strategy/jwt-auth.guard';
-import { RequestRecoverPasswordCodeDto } from './dto/request-recover-password-code.dto';
-import { RecoverPasswordDto } from './dto/recover-password.dto';
-import { ConfirmEmailDto } from './dto/confirm-email.dto';
+import { Body, Controller, Get, HttpCode, Post, Query } from "@nestjs/common";
+import { AuthService } from "./auth.service";
+import { ApiTags } from "@nestjs/swagger";
+import { SignInDto } from "./dto/sigin.dto";
+import { Public } from "./strategy/jwt-auth.guard";
+import { RequestRecoverPasswordCodeDto } from "./dto/request-recover-password-code.dto";
+import { RecoverPasswordDto } from "./dto/recover-password.dto";
+import { ConfirmEmailDto } from "./dto/confirm-email.dto";
 
-@ApiTags('auth')
+@ApiTags("auth")
 @Public()
-@Controller('auth')
+@Controller("auth")
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('signin')
+  @Post("signin")
   @HttpCode(200)
   signIn(@Body() signInDto: SignInDto) {
     return this.authService.signIn(signInDto);
   }
 
-  @Post('confirm-email')
+  @Post("confirm-email")
   @HttpCode(204)
   confirmEmail(@Body() confirmEmailDto: ConfirmEmailDto) {
     return this.authService.confirmEmail(confirmEmailDto);
   }
 
-  @Get('password/recover/code')
+  @Get("password/recover/code")
   @HttpCode(204)
   requestRecoverPasswordCode(
     @Query() recoverPasswordDto: RequestRecoverPasswordCodeDto,
@@ -33,7 +33,7 @@ export class AuthController {
     return this.authService.requestRecoverPasswordCode(recoverPasswordDto);
   }
 
-  @Post('password/recover')
+  @Post("password/recover")
   @HttpCode(204)
   recoverPassword(@Body() recoverPasswordDto: RecoverPasswordDto) {
     return this.authService.recoverPassword(recoverPasswordDto);

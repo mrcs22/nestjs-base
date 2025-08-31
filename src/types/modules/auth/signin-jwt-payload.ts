@@ -1,6 +1,6 @@
-import { Permission } from 'src/modules/roles/entities/permissions.entity';
-import { Role } from 'src/modules/roles/entities/role.entity';
-import { RolePermissionName } from 'src/types/roles/role-permission';
+import { Permission } from "src/modules/roles/entities/permissions.entity";
+import { Role } from "src/modules/roles/entities/role.entity";
+import { RolePermissionName } from "src/types/roles/role-permission";
 
 type AutenticatedJwtUser = {
   id: string;

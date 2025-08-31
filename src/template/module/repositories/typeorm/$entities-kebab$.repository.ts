@@ -1,10 +1,10 @@
-import { DataSource, EntityManager, Repository } from 'typeorm';
-import { Injectable } from '@nestjs/common';
-import { $Entity$ } from '../../entities/$entity-kebab$.entity';
-import { Abstract$Entities$Repository } from '../abstract.$entities-kebab$.repository';
-import { ListAll$Entities$Dto } from '../../dto/list-$entities-kebab$.dto';
-import { Listed$Entity$Dto } from '../../dto/listed-$entity-kebab$.dto';
-import { RepositoryListingResult } from 'src/types/modules/repository-listing-mode';
+import { DataSource, EntityManager, Repository } from "typeorm";
+import { Injectable } from "@nestjs/common";
+import { $Entity$ } from "../../entities/$entity-kebab$.entity";
+import { Abstract$Entities$Repository } from "../abstract.$entities-kebab$.repository";
+import { ListAll$Entities$Dto } from "../../dto/list-$entities-kebab$.dto";
+import { Listed$Entity$Dto } from "../../dto/listed-$entity-kebab$.dto";
+import { RepositoryListingResult } from "src/types/modules/repository-listing-mode";
 
 @Injectable()
 export class $Entities$TypeormRepository extends Abstract$Entities$Repository {
@@ -23,19 +23,19 @@ export class $Entities$TypeormRepository extends Abstract$Entities$Repository {
   }
 
   async listAll<Simplified extends boolean>(
-    { page, limit, order = 'desc', query, isActive }: ListAll$Entities$Dto,
+    { page, limit, order = "desc", query, isActive }: ListAll$Entities$Dto,
     simplified: Simplified,
   ) {
-    const $entity$Qb = this.$entities$Repository.createQueryBuilder('$entity$');
+    const $entity$Qb = this.$entities$Repository.createQueryBuilder("$entity$");
 
     if (isActive !== undefined) {
-      $entity$Qb.andWhere('$entity$.isActive = :isActive', {
+      $entity$Qb.andWhere("$entity$.isActive = :isActive", {
         isActive,
       });
     }
 
     if (query) {
-      $entity$Qb.andWhere('$entity$.name LIKE :query', {
+      $entity$Qb.andWhere("$entity$.name LIKE :query", {
         query: `%${query}%`,
       });
     }
@@ -45,13 +45,13 @@ export class $Entities$TypeormRepository extends Abstract$Entities$Repository {
       $entity$Qb.take(limit);
     }
 
-    const listingOrder = order.toUpperCase() as 'ASC' | 'DESC';
+    const listingOrder = order.toUpperCase() as "ASC" | "DESC";
 
-    $entity$Qb.orderBy('$entity$.createdAt', listingOrder);
+    $entity$Qb.orderBy("$entity$.createdAt", listingOrder);
 
-    let selectFields = ['$entity$.id', '$entity$.name', '$entity$.createdAt'];
+    let selectFields = ["$entity$.id", "$entity$.name", "$entity$.createdAt"];
     if (!simplified) {
-      selectFields = ['$entity$'];
+      selectFields = ["$entity$"];
     }
 
     $entity$Qb.select(selectFields);

@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import * as fs from "fs";
 
 function deleteFile(filePath: string) {
   fs.unlink(filePath, (err) => {

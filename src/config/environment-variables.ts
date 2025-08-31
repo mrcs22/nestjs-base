@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import "dotenv/config";
 
 const requireProcessEnv = (name: string) => {
   if (!process.env[name]) {
@@ -15,7 +15,7 @@ export type EnvironmentVariables = {
   JWT_EXPIRES: string;
   SHOW_DOCS: boolean;
   STORAGE_TYPE: string;
-  FILES_STORAGE_TYPE: 'local' | 'remote';
+  FILES_STORAGE_TYPE: "local" | "remote";
   API_URL: string;
   FRONT_URL: string;
   SMTP_SERVICE?: string;
@@ -28,25 +28,25 @@ export type EnvironmentVariables = {
 };
 
 const environmentVariables: EnvironmentVariables = {
-  PORT: process.env.PORT || '3001',
-  JWT_SECRET: requireProcessEnv('JWT_SECRET'),
-  DATABASE_URL: requireProcessEnv('DATABASE_URL'),
-  JWT_EXPIRES: requireProcessEnv('JWT_EXPIRES'),
-  STORAGE_TYPE: requireProcessEnv('STORAGE_TYPE'),
-  FILES_STORAGE_TYPE: requireProcessEnv('FILES_STORAGE_TYPE') as
-    | 'local'
-    | 'remote',
-  API_URL: requireProcessEnv('API_URL'),
-  SHOW_DOCS: requireProcessEnv('SHOW_DOCS').toLowerCase() === 'true',
+  PORT: process.env.PORT || "3001",
+  JWT_SECRET: requireProcessEnv("JWT_SECRET"),
+  DATABASE_URL: requireProcessEnv("DATABASE_URL"),
+  JWT_EXPIRES: requireProcessEnv("JWT_EXPIRES"),
+  STORAGE_TYPE: requireProcessEnv("STORAGE_TYPE"),
+  FILES_STORAGE_TYPE: requireProcessEnv("FILES_STORAGE_TYPE") as
+    | "local"
+    | "remote",
+  API_URL: requireProcessEnv("API_URL"),
+  SHOW_DOCS: requireProcessEnv("SHOW_DOCS").toLowerCase() === "true",
   SMTP_SERVICE: process.env.SMTP_SERVICE,
-  SMTP_HOST: requireProcessEnv('SMTP_HOST'),
-  SMTP_PORT: +requireProcessEnv('SMTP_PORT'),
-  SMTP_SECURE: requireProcessEnv('SMTP_SECURE') === 'true',
-  SMTP_USER: requireProcessEnv('SMTP_USER'),
-  SMTP_PASS: requireProcessEnv('SMTP_PASS'),
-  FRONT_URL: requireProcessEnv('FRONT_URL'),
+  SMTP_HOST: requireProcessEnv("SMTP_HOST"),
+  SMTP_PORT: +requireProcessEnv("SMTP_PORT"),
+  SMTP_SECURE: requireProcessEnv("SMTP_SECURE") === "true",
+  SMTP_USER: requireProcessEnv("SMTP_USER"),
+  SMTP_PASS: requireProcessEnv("SMTP_PASS"),
+  FRONT_URL: requireProcessEnv("FRONT_URL"),
   SHOULD_SEND_EMAILS:
-    requireProcessEnv('SHOULD_SEND_EMAILS').toLowerCase() === 'true',
+    requireProcessEnv("SHOULD_SEND_EMAILS").toLowerCase() === "true",
 };
 
 export { environmentVariables };

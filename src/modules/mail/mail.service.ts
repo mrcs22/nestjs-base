@@ -1,11 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { readFileSync } from 'fs';
-import Handlebars from 'handlebars';
-import * as nodemailer from 'nodemailer';
-import Mail from 'nodemailer/lib/mailer';
-import SMTPTransport from 'nodemailer/lib/smtp-transport';
-import { environmentVariables } from 'src/config/environment-variables';
-import { MailAttachment } from 'src/types/modules/mail/mail-attachment';
+import { Injectable } from "@nestjs/common";
+import { readFileSync } from "fs";
+import Handlebars from "handlebars";
+import * as nodemailer from "nodemailer";
+import Mail from "nodemailer/lib/mailer";
+import SMTPTransport from "nodemailer/lib/smtp-transport";
+import { environmentVariables } from "src/config/environment-variables";
+import { MailAttachment } from "src/types/modules/mail/mail-attachment";
 
 export interface ISendTemporyPasswordMailParams {
   to: string;
@@ -33,9 +33,9 @@ export class MailService {
   async sendConfirmEmailMail({
     to,
     name,
-    confirmUrl
+    confirmUrl,
   }: ISendConfirmEmailMailParams): Promise<void> {
-    const subject = 'Confirmação de email';
+    const subject = "Confirmação de email";
     const templatePath = `${__dirname}/../../static/mail/templates/confirm-email-mail.html`;
 
     await this.sendMail({
@@ -52,7 +52,7 @@ export class MailService {
     name,
     temporaryPassword,
   }: ISendTemporyPasswordMailParams): Promise<void> {
-    const subject = 'Primeiro acesso - Senha temporária';
+    const subject = "Primeiro acesso - Senha temporária";
     const templatePath = `${__dirname}/../../static/mail/templates/temporary-password-mail.html`;
 
     await this.sendMail({
@@ -70,7 +70,7 @@ export class MailService {
     recoverCode,
     recoverUrl,
   }: ISendRecoverPasswordMailParams): Promise<void> {
-    const subject = 'Recuperação de senha';
+    const subject = "Recuperação de senha";
     const templatePath = `${__dirname}/../../static/mail/templates/recover-password-mail.html`;
 
     await this.sendMail({
@@ -97,9 +97,9 @@ export class MailService {
   }): Promise<void> {
     if (!environmentVariables.SHOULD_SEND_EMAILS)
       return console.info(
-        'Emails are disabled. Skipping sending email to',
+        "Emails are disabled. Skipping sending email to",
         to,
-        'with subject',
+        "with subject",
         subject,
       );
 
@@ -169,7 +169,7 @@ export class MailService {
     templatePath: string,
     variables: object,
   ): Promise<string> {
-    const templateFileContent = readFileSync(templatePath).toString('utf-8');
+    const templateFileContent = readFileSync(templatePath).toString("utf-8");
     const templateParse = Handlebars.compile(templateFileContent);
 
     return templateParse(variables);

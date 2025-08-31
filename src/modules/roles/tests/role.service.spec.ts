@@ -1,18 +1,18 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { RolesService } from '../roles.service';
-import { AbstractRolesRepository } from '../repositories/abstract.roles.repository';
-import { ListAllRolesDto } from '../dto/list-roles.dto';
+import { Test, TestingModule } from "@nestjs/testing";
+import { RolesService } from "../roles.service";
+import { AbstractRolesRepository } from "../repositories/abstract.roles.repository";
+import { ListAllRolesDto } from "../dto/list-roles.dto";
 import {
   RoleFactory,
   CreateroleDtoFactory,
   UpdateroleDtoFactory,
-} from './factory/role';
-import { Role } from '../entities/role.entity';
-import AppException from 'src/exception-filters/app-exception/app-exception';
-import { faker } from '@faker-js/faker';
-import { HttpStatus } from '@nestjs/common';
+} from "./factory/role";
+import { Role } from "../entities/role.entity";
+import AppException from "src/exception-filters/app-exception/app-exception";
+import { faker } from "@faker-js/faker";
+import { HttpStatus } from "@nestjs/common";
 
-describe('roleService', () => {
+describe("roleService", () => {
   let roleService: RolesService;
   let roleRepository: AbstractRolesRepository;
 
@@ -42,149 +42,123 @@ describe('roleService', () => {
     );
   });
 
-  describe('create', () => {
-    it('should create a new active role', async () => {
+  describe("create", () => {
+    it("should create a new active role", async () => {
       const createroleDto = CreateroleDtoFactory.generate();
       createroleDto.isActive = true;
 
-      jest.spyOn(roleRepository, 'findByName').mockResolvedValue(null);
+      jest.spyOn(roleRepository, "findByName").mockResolvedValue(null);
 
       const expectedrole = new Role();
       expectedrole.fromDto(createroleDto);
 
-      jest
-        .spyOn(roleRepository, 'create')
-        .mockResolvedValue(expectedrole);
+      jest.spyOn(roleRepository, "create").mockResolvedValue(expectedrole);
 
       const result = await roleService.create(createroleDto);
       expect(result).toEqual(expectedrole);
     });
 
-    it('should create a new inactive role', async () => {
+    it("should create a new inactive role", async () => {
       const createroleDto = CreateroleDtoFactory.generate();
       createroleDto.isActive = false;
 
-      jest.spyOn(roleRepository, 'findByName').mockResolvedValue(null);
+      jest.spyOn(roleRepository, "findByName").mockResolvedValue(null);
 
       const expectedrole = new Role();
       expectedrole.fromDto(createroleDto);
 
-      jest
-        .spyOn(roleRepository, 'create')
-        .mockResolvedValue(expectedrole);
+      jest.spyOn(roleRepository, "create").mockResolvedValue(expectedrole);
 
       const result = await roleService.create(createroleDto);
       expect(result).toEqual(expectedrole);
     });
 
-    it('should throw an error if the role name already exists', async () => {
+    it("should throw an error if the role name already exists", async () => {
       const createroleDto = CreateroleDtoFactory.generate();
 
       const role = new Role();
       role.fromDto(createroleDto);
 
-      jest.spyOn(roleRepository, 'findByName').mockResolvedValue(role);
+      jest.spyOn(roleRepository, "findByName").mockResolvedValue(role);
 
-      await expect(
-        roleService.create(createroleDto),
-      ).rejects.toMatchObject(
+      await expect(roleService.create(createroleDto)).rejects.toMatchObject(
         new AppException(`Já existe um cargo com este nome`, 409),
       );
     });
   });
 
-  describe('listAll', () => {
-    it('should return a not simplified list of role', async () => {
+  describe("listAll", () => {
+    it("should return a not simplified list of role", async () => {
       const listAllroleDto = new ListAllRolesDto();
       const simplified = false;
 
       const expectedrole = RoleFactory.generateManyListed(5);
 
       jest
-        .spyOn(roleRepository, 'listAll')
+        .spyOn(roleRepository, "listAll")
         .mockResolvedValue([expectedrole, expectedrole.length]);
 
-      const result = await roleService.listAll(
-        listAllroleDto,
-        simplified,
-      );
+      const result = await roleService.listAll(listAllroleDto, simplified);
 
       expect(result).toEqual([expectedrole, expectedrole.length]);
     });
   });
 
-  describe('update', () => {
-    it('should update role if its name is not used before', async () => {
+  describe("update", () => {
+    it("should update role if its name is not used before", async () => {
       const id = faker.string.uuid();
       const updateroleDto = UpdateroleDtoFactory.generate();
 
       const existingrole = RoleFactory.generate();
-      jest
-        .spyOn(roleRepository, 'findById')
-        .mockResolvedValue(existingrole);
+      jest.spyOn(roleRepository, "findById").mockResolvedValue(existingrole);
 
-      jest.spyOn(roleRepository, 'findByName').mockResolvedValue(null);
+      jest.spyOn(roleRepository, "findByName").mockResolvedValue(null);
 
       const expectedrole = new Role();
       expectedrole.fromDto(updateroleDto);
       expectedrole.id = id;
-      jest
-        .spyOn(roleRepository, 'update')
-        .mockResolvedValue(expectedrole);
+      jest.spyOn(roleRepository, "update").mockResolvedValue(expectedrole);
 
       const result = await roleService.update(id, updateroleDto);
 
       expect(result).toEqual(expectedrole);
     });
 
-    it('should update role if exists same name but its same role', async () => {
+    it("should update role if exists same name but its same role", async () => {
       const updateroleDto = UpdateroleDtoFactory.generate();
 
       const existingrole = RoleFactory.generate();
-      jest
-        .spyOn(roleRepository, 'findById')
-        .mockResolvedValue(existingrole);
+      jest.spyOn(roleRepository, "findById").mockResolvedValue(existingrole);
 
-      jest
-        .spyOn(roleRepository, 'findByName')
-        .mockResolvedValue(existingrole);
+      jest.spyOn(roleRepository, "findByName").mockResolvedValue(existingrole);
 
-      jest
-        .spyOn(roleRepository, 'update')
-        .mockResolvedValue(existingrole);
+      jest.spyOn(roleRepository, "update").mockResolvedValue(existingrole);
 
-      const result = await roleService.update(
-        existingrole.id,
-        updateroleDto,
-      );
+      const result = await roleService.update(existingrole.id, updateroleDto);
 
       expect(result).toEqual(existingrole);
     });
 
-    it('should throw error if the role does not exist', async () => {
+    it("should throw error if the role does not exist", async () => {
       const id = faker.string.uuid();
       const updateroleDto = UpdateroleDtoFactory.generate();
 
-      jest.spyOn(roleRepository, 'findById').mockResolvedValue(null);
+      jest.spyOn(roleRepository, "findById").mockResolvedValue(null);
 
-      await expect(
-        roleService.update(id, updateroleDto),
-      ).rejects.toMatchObject(
+      await expect(roleService.update(id, updateroleDto)).rejects.toMatchObject(
         new AppException(`Cargo não encontrado`, HttpStatus.NOT_FOUND),
       );
     });
 
-    it('should throw an error if the role name already exists and is not updated one', async () => {
+    it("should throw an error if the role name already exists and is not updated one", async () => {
       const updateroleDto = UpdateroleDtoFactory.generate();
 
       const existingrole = RoleFactory.generate();
-      jest
-        .spyOn(roleRepository, 'findById')
-        .mockResolvedValue(existingrole);
+      jest.spyOn(roleRepository, "findById").mockResolvedValue(existingrole);
 
       const conflictingrole = RoleFactory.generate();
       jest
-        .spyOn(roleRepository, 'findByName')
+        .spyOn(roleRepository, "findByName")
         .mockResolvedValue(conflictingrole);
 
       await expect(
@@ -198,23 +172,21 @@ describe('roleService', () => {
     });
   });
 
-  describe('remove', () => {
-    it('should remove a role', async () => {
+  describe("remove", () => {
+    it("should remove a role", async () => {
       const id = faker.string.uuid();
 
       const existingrole = RoleFactory.generate();
-      jest
-        .spyOn(roleRepository, 'findById')
-        .mockResolvedValue(existingrole);
+      jest.spyOn(roleRepository, "findById").mockResolvedValue(existingrole);
       await roleService.remove(id);
 
       expect(roleRepository.remove).toHaveBeenCalledWith(id);
     });
 
-    it('should throw an error if the role does not exist', async () => {
+    it("should throw an error if the role does not exist", async () => {
       const id = faker.string.uuid();
 
-      jest.spyOn(roleRepository, 'findById').mockResolvedValue(null);
+      jest.spyOn(roleRepository, "findById").mockResolvedValue(null);
 
       await expect(roleService.remove(id)).rejects.toMatchObject(
         new AppException(`Cargo não encontrado`, HttpStatus.NOT_FOUND),
@@ -222,12 +194,10 @@ describe('roleService', () => {
     });
   });
 
-  describe('findByName', () => {
-    it('should return a role', async () => {
+  describe("findByName", () => {
+    it("should return a role", async () => {
       const expectedrole = RoleFactory.generate();
-      jest
-        .spyOn(roleRepository, 'findByName')
-        .mockResolvedValue(expectedrole);
+      jest.spyOn(roleRepository, "findByName").mockResolvedValue(expectedrole);
 
       const result = await roleService.findByName({
         name: expectedrole.name,
@@ -236,8 +206,8 @@ describe('roleService', () => {
       expect(result).toEqual(expectedrole);
     });
 
-    it('should return null if the role does not exist', async () => {
-      jest.spyOn(roleRepository, 'findByName').mockResolvedValue(null);
+    it("should return null if the role does not exist", async () => {
+      jest.spyOn(roleRepository, "findByName").mockResolvedValue(null);
 
       const result = await roleService.findByName({
         name: faker.lorem.words(),
@@ -246,14 +216,14 @@ describe('roleService', () => {
       expect(result).toBeNull();
     });
 
-    it('should throw an error if the role does not exist and mode is ensureExistence', async () => {
-      jest.spyOn(roleRepository, 'findByName').mockResolvedValue(null);
+    it("should throw an error if the role does not exist and mode is ensureExistence", async () => {
+      jest.spyOn(roleRepository, "findByName").mockResolvedValue(null);
 
       const name = faker.lorem.words();
       await expect(
         roleService.findByName({
           name: name,
-          mode: 'ensureExistence',
+          mode: "ensureExistence",
         }),
       ).rejects.toMatchObject(
         new AppException(
@@ -263,17 +233,15 @@ describe('roleService', () => {
       );
     });
 
-    it('should throw an error if the role exists and mode is ensureNonExistence', async () => {
+    it("should throw an error if the role exists and mode is ensureNonExistence", async () => {
       const existingrole = RoleFactory.generate();
-      jest
-        .spyOn(roleRepository, 'findByName')
-        .mockResolvedValue(existingrole);
+      jest.spyOn(roleRepository, "findByName").mockResolvedValue(existingrole);
 
       const name = faker.lorem.words();
       await expect(
         roleService.findByName({
           name,
-          mode: 'ensureNonExistence',
+          mode: "ensureNonExistence",
         }),
       ).rejects.toMatchObject(
         new AppException(
@@ -284,12 +252,10 @@ describe('roleService', () => {
     });
   });
 
-  describe('findById', () => {
-    it('should return a role', async () => {
+  describe("findById", () => {
+    it("should return a role", async () => {
       const expectedrole = RoleFactory.generate();
-      jest
-        .spyOn(roleRepository, 'findById')
-        .mockResolvedValue(expectedrole);
+      jest.spyOn(roleRepository, "findById").mockResolvedValue(expectedrole);
 
       const result = await roleService.findById({
         id: expectedrole.id,
@@ -298,8 +264,8 @@ describe('roleService', () => {
       expect(result).toEqual(expectedrole);
     });
 
-    it('should return null if the role does not exist', async () => {
-      jest.spyOn(roleRepository, 'findById').mockResolvedValue(null);
+    it("should return null if the role does not exist", async () => {
+      jest.spyOn(roleRepository, "findById").mockResolvedValue(null);
 
       const result = await roleService.findById({
         id: faker.string.uuid(),
@@ -308,36 +274,31 @@ describe('roleService', () => {
       expect(result).toBeNull();
     });
 
-    it('should throw an error if the role does not exist and mode is ensureExistence', async () => {
-      jest.spyOn(roleRepository, 'findById').mockResolvedValue(null);
+    it("should throw an error if the role does not exist and mode is ensureExistence", async () => {
+      jest.spyOn(roleRepository, "findById").mockResolvedValue(null);
 
       const id = faker.string.uuid();
       await expect(
         roleService.findById({
           id,
-          mode: 'ensureExistence',
+          mode: "ensureExistence",
         }),
       ).rejects.toMatchObject(
         new AppException(`Cargo não encontrado`, HttpStatus.NOT_FOUND),
       );
     });
 
-    it('should throw an error if the role exists and mode is ensureNonExistence', async () => {
+    it("should throw an error if the role exists and mode is ensureNonExistence", async () => {
       const existingrole = RoleFactory.generate();
-      jest
-        .spyOn(roleRepository, 'findById')
-        .mockResolvedValue(existingrole);
+      jest.spyOn(roleRepository, "findById").mockResolvedValue(existingrole);
 
       await expect(
         roleService.findById({
           id: existingrole.id,
-          mode: 'ensureNonExistence',
+          mode: "ensureNonExistence",
         }),
       ).rejects.toMatchObject(
-        new AppException(
-          `Existe outro cargo com este id`,
-          HttpStatus.CONFLICT,
-        ),
+        new AppException(`Existe outro cargo com este id`, HttpStatus.CONFLICT),
       );
     });
   });

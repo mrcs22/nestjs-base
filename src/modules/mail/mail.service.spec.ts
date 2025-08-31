@@ -1,16 +1,16 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { Test, TestingModule } from "@nestjs/testing";
 import {
   MailService,
   ISendTemporyPasswordMailParams,
   ISendRecoverPasswordMailParams,
-} from './mail.service';
-import nodemailer from 'nodemailer';
-import { faker } from '@faker-js/faker';
+} from "./mail.service";
+import nodemailer from "nodemailer";
+import { faker } from "@faker-js/faker";
 
-jest.mock('nodemailer');
+jest.mock("nodemailer");
 jest.useFakeTimers();
 
-describe('MailService', () => {
+describe("MailService", () => {
   let mailService: MailService;
 
   beforeEach(async () => {
@@ -20,16 +20,17 @@ describe('MailService', () => {
 
     mailService = module.get<MailService>(MailService);
 
-    jest.spyOn(nodemailer, 'createTransport').mockReturnValue({
+    jest.spyOn(nodemailer, "createTransport").mockReturnValue({
       sendMail: jest.fn().mockResolvedValue({}),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any);
 
     jest.clearAllMocks();
     jest.clearAllTimers();
   });
 
-  describe('sendTemporyPasswordMail', () => {
-    it('should send temporary password mail', async () => {
+  describe("sendTemporyPasswordMail", () => {
+    it("should send temporary password mail", async () => {
       const params: ISendTemporyPasswordMailParams = {
         to: faker.internet.email(),
         name: faker.lorem.words(2),
@@ -46,13 +47,14 @@ describe('MailService', () => {
       expect(nodemailer.createTransport().sendMail).toHaveBeenCalled();
     });
 
-    it('should retry to 5 times send temporary password mail if sendMail fails', async () => {
+    it("should retry to 5 times send temporary password mail if sendMail fails", async () => {
       const mockSendMail = jest
         .fn()
-        .mockRejectedValue(new Error('Simulated error'));
+        .mockRejectedValue(new Error("Simulated error"));
 
-      jest.spyOn(nodemailer, 'createTransport').mockReturnValue({
+      jest.spyOn(nodemailer, "createTransport").mockReturnValue({
         sendMail: mockSendMail,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any);
 
       const to = faker.internet.email();
@@ -66,14 +68,14 @@ describe('MailService', () => {
         }),
       };
 
-      jest.spyOn(console, 'error').mockImplementation(() => {});
+      jest.spyOn(console, "error").mockImplementation(() => {});
 
       await expect(
         mailService.sendTemporyPasswordMail(params),
       ).resolves.toBeUndefined();
       const retryTimes = 5;
 
-      const subject = 'Primeiro acesso - Senha temporária';
+      const subject = "Primeiro acesso - Senha temporária";
 
       for (let i = 1; i <= retryTimes; i++) {
         jest.advanceTimersByTime(5 * 60 * 1000);
@@ -93,8 +95,8 @@ describe('MailService', () => {
     });
   });
 
-  describe('sendRecoverPasswordMail', () => {
-    it('should send recover password mail', async () => {
+  describe("sendRecoverPasswordMail", () => {
+    it("should send recover password mail", async () => {
       const params: ISendRecoverPasswordMailParams = {
         to: faker.internet.email(),
         name: faker.lorem.words(2),

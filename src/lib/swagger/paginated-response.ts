@@ -1,6 +1,6 @@
-import { applyDecorators } from '@nestjs/common';
-import { ApiOkResponse, getSchemaPath, ApiExtraModels } from '@nestjs/swagger';
-import { PaginationDto } from 'src/utils/pagination/dto/pagination.dto';
+import { applyDecorators } from "@nestjs/common";
+import { ApiOkResponse, getSchemaPath, ApiExtraModels } from "@nestjs/swagger";
+import { PaginationDto } from "src/utils/pagination/dto/pagination.dto";
 
 export interface PaginationSchema {
   totalItems: number;
@@ -10,26 +10,28 @@ export interface PaginationSchema {
   lastPage: number;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const createPaginationSchema = (model: any) => ({
-  type: 'object',
+  type: "object",
   properties: {
     pagination: {
-      type: 'object',
+      type: "object",
       properties: {
-        totalItems: { type: 'number' },
-        currentPage: { type: 'number' },
-        nextPage: { type: 'number', nullable: true },
-        prevPage: { type: 'number', nullable: true },
-        lastPage: { type: 'number' },
+        totalItems: { type: "number" },
+        currentPage: { type: "number" },
+        nextPage: { type: "number", nullable: true },
+        prevPage: { type: "number", nullable: true },
+        lastPage: { type: "number" },
       },
     },
     items: {
-      type: 'array',
+      type: "array",
       items: { $ref: getSchemaPath(model) },
     },
   },
 });
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const ApiPaginatedResponse = (model: any) => {
   const schema = createPaginationSchema(model);
 

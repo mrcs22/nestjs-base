@@ -4,16 +4,16 @@ import {
   Injectable,
   SetMetadata,
   UnauthorizedException,
-} from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { JwtService } from '@nestjs/jwt';
-import { Request } from 'express';
-import { environmentVariables } from 'src/config/environment-variables';
-import { UsersService } from 'src/modules/users/users.service';
-import { AutenticatedJwtUser } from 'src/types/modules/auth/signin-jwt-payload';
-import { RolePermissionName } from 'src/types/roles/role-permission';
+} from "@nestjs/common";
+import { Reflector } from "@nestjs/core";
+import { JwtService } from "@nestjs/jwt";
+import { Request } from "express";
+import { environmentVariables } from "src/config/environment-variables";
+import { UsersService } from "src/modules/users/users.service";
+import { AutenticatedJwtUser } from "src/types/modules/auth/signin-jwt-payload";
+import { RolePermissionName } from "src/types/roles/role-permission";
 
-export const IS_PUBLIC_KEY = 'isPublic';
+export const IS_PUBLIC_KEY = "isPublic";
 export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
 
 @Injectable()
@@ -48,16 +48,19 @@ export class JwtAuthGuard implements CanActivate {
 
       const user = await this.usersService.findById({
         id,
-        mode: 'ensureExistence',
+        mode: "ensureExistence",
       });
 
       const autenticatedUser: AutenticatedJwtUser = {
         id: user.id,
-        role:  user.role,
-        getPermissionByName: (name: RolePermissionName) => user.role?.permissions?.find(permission => permission.name === name),
+        role: user.role,
+        getPermissionByName: (name: RolePermissionName) =>
+          user.role?.permissions?.find(
+            (permission) => permission.name === name,
+          ),
       };
 
-      request['user'] = autenticatedUser;
+      request["user"] = autenticatedUser;
     } catch {
       throw new UnauthorizedException();
     }
@@ -66,7 +69,7 @@ export class JwtAuthGuard implements CanActivate {
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {
-    const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined;
+    const [type, token] = request.headers.authorization?.split(" ") ?? [];
+    return type === "Bearer" ? token : undefined;
   }
 }

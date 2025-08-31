@@ -1,5 +1,11 @@
-import { Transform } from 'class-transformer';
-import { IsEmail, IsNotEmpty, IsString, Length, Max, MaxLength, Min, MinLength } from 'class-validator';
+import { Transform } from "class-transformer";
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  MaxLength,
+  MinLength,
+} from "class-validator";
 
 export class ConfirmEmailDto {
   @Transform(({ value }) => value?.trim())

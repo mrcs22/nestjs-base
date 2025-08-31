@@ -1,12 +1,12 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { SetMetadata } from '@nestjs/common';
-import { RolePermissionName } from 'src/types/roles/role-permission';
-import { RolePermissionOption } from 'src/types/roles/role-permission-options';
-import { AutenticatedJwtUser } from 'src/types/modules/auth/signin-jwt-payload';
-import { IS_PUBLIC_KEY } from './jwt-auth.guard';
+import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
+import { Reflector } from "@nestjs/core";
+import { SetMetadata } from "@nestjs/common";
+import { RolePermissionName } from "src/types/roles/role-permission";
+import { RolePermissionOption } from "src/types/roles/role-permission-options";
+import { AutenticatedJwtUser } from "src/types/modules/auth/signin-jwt-payload";
+import { IS_PUBLIC_KEY } from "./jwt-auth.guard";
 
-export const PERMISSION_KEY = 'requiredPermission';
+export const PERMISSION_KEY = "requiredPermission";
 
 export interface IRequiredPermission {
   name: RolePermissionName;
@@ -41,14 +41,12 @@ export class RolesGuard implements CanActivate {
 
     const userRequiredPermission = user.getPermissionByName(
       requiredPermission.name,
-    )
+    );
 
     if (!userRequiredPermission) {
       return false;
     }
-    
-    return Boolean(userRequiredPermission[
-      requiredPermission.option
-    ]);
+
+    return Boolean(userRequiredPermission[requiredPermission.option]);
   }
 }

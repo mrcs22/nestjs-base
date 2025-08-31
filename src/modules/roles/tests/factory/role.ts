@@ -1,8 +1,8 @@
-import { faker } from '@faker-js/faker';
-import { CreateRoleDto } from '../../dto/create-role.dto';
-import { UpdateRoleDto } from '../../dto/update-role.dto';
-import { Role } from '../../entities/role.entity';
-import { ListedRoleDto } from '../../dto/listed-role.dto';
+import { faker } from "@faker-js/faker";
+import { CreateRoleDto } from "../../dto/create-role.dto";
+import { UpdateRoleDto } from "../../dto/update-role.dto";
+import { Role } from "../../entities/role.entity";
+import { ListedRoleDto } from "../../dto/listed-role.dto";
 
 export class CreateroleDtoFactory {
   static generate(): CreateRoleDto {

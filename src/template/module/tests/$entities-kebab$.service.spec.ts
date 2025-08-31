@@ -1,18 +1,18 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { $Entities$Service } from '../$entities-kebab$.service';
-import { Abstract$Entities$Repository } from '../repositories/abstract.$entities-kebab$.repository';
-import { ListAll$Entities$Dto } from '../dto/list-$entities-kebab$.dto';
+import { Test, TestingModule } from "@nestjs/testing";
+import { $Entities$Service } from "../$entities-kebab$.service";
+import { Abstract$Entities$Repository } from "../repositories/abstract.$entities-kebab$.repository";
+import { ListAll$Entities$Dto } from "../dto/list-$entities-kebab$.dto";
 import {
   $Entity$Factory,
   Create$Entity$DtoFactory,
   Update$Entity$DtoFactory,
-} from './factory/$entity-kebab$.factory'
-import { $Entity$ } from '../entities/$entity-kebab$.entity';
-import AppException from 'src/exception-filters/app-exception/app-exception';
-import { faker } from '@faker-js/faker';
-import { HttpStatus } from '@nestjs/common';
+} from "./factory/$entity-kebab$.factory";
+import { $Entity$ } from "../entities/$entity-kebab$.entity";
+import AppException from "src/exception-filters/app-exception/app-exception";
+import { faker } from "@faker-js/faker";
+import { HttpStatus } from "@nestjs/common";
 
-describe('$entity$Service', () => {
+describe("$entity$Service", () => {
   let $entity$Service: $Entities$Service;
   let $entity$Repository: Abstract$Entities$Repository;
 
@@ -42,35 +42,35 @@ describe('$entity$Service', () => {
     );
   });
 
-  describe('create', () => {
-    it('should create a new active $entity$', async () => {
+  describe("create", () => {
+    it("should create a new active $entity$", async () => {
       const create$entity$Dto = Create$Entity$DtoFactory.generate();
       create$entity$Dto.isActive = true;
 
-      jest.spyOn($entity$Repository, 'findByName').mockResolvedValue(null);
+      jest.spyOn($entity$Repository, "findByName").mockResolvedValue(null);
 
       const expected$entity$ = new $Entity$();
       expected$entity$.fromDto(create$entity$Dto);
 
       jest
-        .spyOn($entity$Repository, 'create')
+        .spyOn($entity$Repository, "create")
         .mockResolvedValue(expected$entity$);
 
       const result = await $entity$Service.create(create$entity$Dto);
       expect(result).toEqual(expected$entity$);
     });
 
-    it('should create a new inactive $entity$', async () => {
+    it("should create a new inactive $entity$", async () => {
       const create$entity$Dto = Create$Entity$DtoFactory.generate();
       create$entity$Dto.isActive = false;
 
-      jest.spyOn($entity$Repository, 'findByName').mockResolvedValue(null);
+      jest.spyOn($entity$Repository, "findByName").mockResolvedValue(null);
 
       const expected$entity$ = new $Entity$();
       expected$entity$.fromDto(create$entity$Dto);
 
       jest
-        .spyOn($entity$Repository, 'create')
+        .spyOn($entity$Repository, "create")
         .mockResolvedValue(expected$entity$);
 
       const result = await $entity$Service.create(create$entity$Dto);
@@ -78,15 +78,15 @@ describe('$entity$Service', () => {
     });
   });
 
-  describe('listAll', () => {
-    it('should return a not simplified list of $entity$', async () => {
+  describe("listAll", () => {
+    it("should return a not simplified list of $entity$", async () => {
       const listAll$entity$Dto = new ListAll$Entities$Dto();
       const simplified = false;
 
       const expected$entity$ = $Entity$Factory.generateManyListed(5);
 
       jest
-        .spyOn($entity$Repository, 'listAll')
+        .spyOn($entity$Repository, "listAll")
         .mockResolvedValue([expected$entity$, expected$entity$.length]);
 
       const result = await $entity$Service.listAll(
@@ -98,23 +98,23 @@ describe('$entity$Service', () => {
     });
   });
 
-  describe('update', () => {
-    it('should update $entity$ if its name is not used before', async () => {
+  describe("update", () => {
+    it("should update $entity$ if its name is not used before", async () => {
       const id = faker.string.uuid();
       const update$entity$Dto = Update$Entity$DtoFactory.generate();
 
       const existing$entity$ = $Entity$Factory.generate();
       jest
-        .spyOn($entity$Repository, 'findById')
+        .spyOn($entity$Repository, "findById")
         .mockResolvedValue(existing$entity$);
 
-      jest.spyOn($entity$Repository, 'findByName').mockResolvedValue(null);
+      jest.spyOn($entity$Repository, "findByName").mockResolvedValue(null);
 
       const expected$entity$ = new $Entity$();
       expected$entity$.fromDto(update$entity$Dto);
       expected$entity$.id = id;
       jest
-        .spyOn($entity$Repository, 'update')
+        .spyOn($entity$Repository, "update")
         .mockResolvedValue(expected$entity$);
 
       const result = await $entity$Service.update(id, update$entity$Dto);
@@ -122,20 +122,20 @@ describe('$entity$Service', () => {
       expect(result).toEqual(expected$entity$);
     });
 
-    it('should update $entity$ if exists same name but its same $entity$', async () => {
+    it("should update $entity$ if exists same name but its same $entity$", async () => {
       const update$entity$Dto = Update$Entity$DtoFactory.generate();
 
       const existing$entity$ = $Entity$Factory.generate();
       jest
-        .spyOn($entity$Repository, 'findById')
+        .spyOn($entity$Repository, "findById")
         .mockResolvedValue(existing$entity$);
 
       jest
-        .spyOn($entity$Repository, 'findByName')
+        .spyOn($entity$Repository, "findByName")
         .mockResolvedValue(existing$entity$);
 
       jest
-        .spyOn($entity$Repository, 'update')
+        .spyOn($entity$Repository, "update")
         .mockResolvedValue(existing$entity$);
 
       const result = await $entity$Service.update(
@@ -146,11 +146,11 @@ describe('$entity$Service', () => {
       expect(result).toEqual(existing$entity$);
     });
 
-    it('should throw error if the $entity$ does not exist', async () => {
+    it("should throw error if the $entity$ does not exist", async () => {
       const id = faker.string.uuid();
       const update$entity$Dto = Update$Entity$DtoFactory.generate();
 
-      jest.spyOn($entity$Repository, 'findById').mockResolvedValue(null);
+      jest.spyOn($entity$Repository, "findById").mockResolvedValue(null);
 
       await expect(
         $entity$Service.update(id, update$entity$Dto),
@@ -159,17 +159,17 @@ describe('$entity$Service', () => {
       );
     });
 
-    it('should throw an error if the $entity$ name already exists and is not updated one', async () => {
+    it("should throw an error if the $entity$ name already exists and is not updated one", async () => {
       const update$entity$Dto = Update$Entity$DtoFactory.generate();
 
       const existing$entity$ = $Entity$Factory.generate();
       jest
-        .spyOn($entity$Repository, 'findById')
+        .spyOn($entity$Repository, "findById")
         .mockResolvedValue(existing$entity$);
 
       const conflicting$entity$ = $Entity$Factory.generate();
       jest
-        .spyOn($entity$Repository, 'findByName')
+        .spyOn($entity$Repository, "findByName")
         .mockResolvedValue(conflicting$entity$);
 
       await expect(
@@ -183,23 +183,23 @@ describe('$entity$Service', () => {
     });
   });
 
-  describe('remove', () => {
-    it('should remove a $entity$', async () => {
+  describe("remove", () => {
+    it("should remove a $entity$", async () => {
       const id = faker.string.uuid();
 
       const existing$entity$ = $Entity$Factory.generate();
       jest
-        .spyOn($entity$Repository, 'findById')
+        .spyOn($entity$Repository, "findById")
         .mockResolvedValue(existing$entity$);
       await $entity$Service.remove(id);
 
       expect($entity$Repository.remove).toHaveBeenCalledWith(id);
     });
 
-    it('should throw an error if the $entity$ does not exist', async () => {
+    it("should throw an error if the $entity$ does not exist", async () => {
       const id = faker.string.uuid();
 
-      jest.spyOn($entity$Repository, 'findById').mockResolvedValue(null);
+      jest.spyOn($entity$Repository, "findById").mockResolvedValue(null);
 
       await expect($entity$Service.remove(id)).rejects.toMatchObject(
         new AppException(`$Entity_pt$ não encontrado(a)`, HttpStatus.NOT_FOUND),
@@ -207,11 +207,11 @@ describe('$entity$Service', () => {
     });
   });
 
-  describe('findById', () => {
-    it('should return a $entity$', async () => {
+  describe("findById", () => {
+    it("should return a $entity$", async () => {
       const expected$entity$ = $Entity$Factory.generate();
       jest
-        .spyOn($entity$Repository, 'findById')
+        .spyOn($entity$Repository, "findById")
         .mockResolvedValue(expected$entity$);
 
       const result = await $entity$Service.findById({
@@ -221,8 +221,8 @@ describe('$entity$Service', () => {
       expect(result).toEqual(expected$entity$);
     });
 
-    it('should return null if the $entity$ does not exist', async () => {
-      jest.spyOn($entity$Repository, 'findById').mockResolvedValue(null);
+    it("should return null if the $entity$ does not exist", async () => {
+      jest.spyOn($entity$Repository, "findById").mockResolvedValue(null);
 
       const result = await $entity$Service.findById({
         id: faker.string.uuid(),
@@ -231,30 +231,30 @@ describe('$entity$Service', () => {
       expect(result).toBeNull();
     });
 
-    it('should throw an error if the $entity$ does not exist and mode is ensureExistence', async () => {
-      jest.spyOn($entity$Repository, 'findById').mockResolvedValue(null);
+    it("should throw an error if the $entity$ does not exist and mode is ensureExistence", async () => {
+      jest.spyOn($entity$Repository, "findById").mockResolvedValue(null);
 
       const id = faker.string.uuid();
       await expect(
         $entity$Service.findById({
           id,
-          mode: 'ensureExistence',
+          mode: "ensureExistence",
         }),
       ).rejects.toMatchObject(
         new AppException(`$Entity_pt$ não encontrado(a)`, HttpStatus.NOT_FOUND),
       );
     });
 
-    it('should throw an error if the $entity$ exists and mode is ensureNonExistence', async () => {
+    it("should throw an error if the $entity$ exists and mode is ensureNonExistence", async () => {
       const existing$entity$ = $Entity$Factory.generate();
       jest
-        .spyOn($entity$Repository, 'findById')
+        .spyOn($entity$Repository, "findById")
         .mockResolvedValue(existing$entity$);
 
       await expect(
         $entity$Service.findById({
           id: existing$entity$.id,
-          mode: 'ensureNonExistence',
+          mode: "ensureNonExistence",
         }),
       ).rejects.toMatchObject(
         new AppException(

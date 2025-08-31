@@ -1,11 +1,11 @@
-import { DataSource, EntityManager, Repository } from 'typeorm';
-import { Injectable } from '@nestjs/common';
-import { User } from '../../entities/user.entity';
-import { AbstractUsersRepository } from '../abstract.users.repository';
-import { ListAllUsersDto } from '../../dto/list-users.dto';
-import { ListedUserDto } from '../../dto/listed-user.dto';
-import { RepositoryListingResult } from 'src/types/modules/repository-listing-mode';
-import { Attachment } from 'src/modules/attachments/entities/attachment.entity';
+import { DataSource, EntityManager, Repository } from "typeorm";
+import { Injectable } from "@nestjs/common";
+import { User } from "../../entities/user.entity";
+import { AbstractUsersRepository } from "../abstract.users.repository";
+import { ListAllUsersDto } from "../../dto/list-users.dto";
+import { ListedUserDto } from "../../dto/listed-user.dto";
+import { RepositoryListingResult } from "src/types/modules/repository-listing-mode";
+import { Attachment } from "src/modules/attachments/entities/attachment.entity";
 
 @Injectable()
 export class UsersTypeormRepository extends AbstractUsersRepository {
@@ -20,30 +20,31 @@ export class UsersTypeormRepository extends AbstractUsersRepository {
   }
 
   public async create(user: User) {
-    return this.entityManager.transaction(async transactionManager => {
-      const pictureSavedAttachment = user.picture ?
-        await transactionManager.save(user.picture) : null
+    return this.entityManager.transaction(async (transactionManager) => {
+      const pictureSavedAttachment = user.picture
+        ? await transactionManager.save(user.picture)
+        : null;
 
-      user.picture = pictureSavedAttachment
+      user.picture = pictureSavedAttachment;
 
       return await transactionManager.save(user);
-    })
+    });
   }
 
   async listAll<Simplified extends boolean>(
-    { page, limit, order = 'desc', query, isActive }: ListAllUsersDto,
+    { page, limit, order = "desc", query, isActive }: ListAllUsersDto,
     simplified: Simplified,
   ) {
-    const userQb = this.usersRepository.createQueryBuilder('user');
+    const userQb = this.usersRepository.createQueryBuilder("user");
 
     if (isActive !== undefined) {
-      userQb.andWhere('user.isActive = :isActive', {
+      userQb.andWhere("user.isActive = :isActive", {
         isActive,
       });
     }
 
     if (query) {
-      userQb.andWhere('user.name LIKE :query', {
+      userQb.andWhere("user.name LIKE :query", {
         query: `%${query}%`,
       });
     }
@@ -53,13 +54,13 @@ export class UsersTypeormRepository extends AbstractUsersRepository {
       userQb.take(limit);
     }
 
-    const listingOrder = order.toUpperCase() as 'ASC' | 'DESC';
+    const listingOrder = order.toUpperCase() as "ASC" | "DESC";
 
-    userQb.orderBy('user.createdAt', listingOrder);
+    userQb.orderBy("user.createdAt", listingOrder);
 
-    let selectFields = ['user.id', 'user.name', 'user.createdAt'];
+    let selectFields = ["user.id", "user.name", "user.createdAt"];
     if (!simplified) {
-      selectFields = ['user'];
+      selectFields = ["user"];
     }
 
     userQb.select(selectFields);
@@ -74,7 +75,7 @@ export class UsersTypeormRepository extends AbstractUsersRepository {
       where: {
         name: name,
       },
-      relations: ['role'],
+      relations: ["role"],
     });
   }
 
@@ -85,13 +86,13 @@ export class UsersTypeormRepository extends AbstractUsersRepository {
     email: string;
     withPassword?: boolean;
   }): Promise<User | null> {
-    const userQb = this.usersRepository.createQueryBuilder('user');
-    userQb.where('user.email = :email', { email });
-    userQb.leftJoinAndSelect('user.role', 'role');
-    userQb.leftJoinAndSelect('role.permissions', 'permissions');
+    const userQb = this.usersRepository.createQueryBuilder("user");
+    userQb.where("user.email = :email", { email });
+    userQb.leftJoinAndSelect("user.role", "role");
+    userQb.leftJoinAndSelect("role.permissions", "permissions");
 
     if (withPassword) {
-      userQb.addSelect('user.password');
+      userQb.addSelect("user.password");
     }
 
     return userQb.getOne();
@@ -102,31 +103,30 @@ export class UsersTypeormRepository extends AbstractUsersRepository {
       where: {
         id,
       },
-      relations: ['role'],
+      relations: ["role"],
     });
   }
 
   update(user: User): Promise<User> {
-    return this.entityManager.transaction(async transactionManager => {
-
-      let pictureSavedAttachment: Attachment | null = user.picture
+    return this.entityManager.transaction(async (transactionManager) => {
+      let pictureSavedAttachment: Attachment | null = user.picture;
       if (user.picture && !user.picture.id) {
-        pictureSavedAttachment = await transactionManager.save(user.picture)
+        pictureSavedAttachment = await transactionManager.save(user.picture);
       }
 
-      user.picture = pictureSavedAttachment
+      user.picture = pictureSavedAttachment;
       const savedUser = await transactionManager.save(user);
 
       if (user.picture === null) {
         await transactionManager.getRepository(Attachment).softDelete({
           users: {
-            id: user.id
-          }
-        })
+            id: user.id,
+          },
+        });
       }
 
-      return savedUser
-    })
+      return savedUser;
+    });
   }
 
   async remove(id: string): Promise<void> {

@@ -1,16 +1,16 @@
-import { INestApplication } from '@nestjs/common';
+import { INestApplication } from "@nestjs/common";
 import {
   SwaggerModule,
   DocumentBuilder,
   SwaggerDocumentOptions,
-} from '@nestjs/swagger';
+} from "@nestjs/swagger";
 
 export function setupSwaggerDocs(app: INestApplication) {
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('Api docs')
-    .setVersion('1.0')
+    .setTitle("Api docs")
+    .setVersion("1.0")
     .addBearerAuth()
-    .addSecurityRequirements('bearer')
+    .addSecurityRequirements("bearer")
     .build();
 
   const swaggerOptions: SwaggerDocumentOptions = {
@@ -24,5 +24,5 @@ export function setupSwaggerDocs(app: INestApplication) {
     swaggerOptions,
   );
 
-  SwaggerModule.setup('docs', app, document);
+  SwaggerModule.setup("docs", app, document);
 }

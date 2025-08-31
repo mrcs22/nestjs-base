@@ -3,12 +3,13 @@ import {
   Catch,
   ExceptionFilter,
   HttpException,
-} from '@nestjs/common';
-import { Response } from 'express';
-import AppException from './app-exception';
+} from "@nestjs/common";
+import { Response } from "express";
+import AppException from "./app-exception";
 
 @Catch()
 export class AppExceptionFilter implements ExceptionFilter {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   catch(err: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
@@ -16,7 +17,7 @@ export class AppExceptionFilter implements ExceptionFilter {
     if (err instanceof AppException) {
       return response.status(err.statusCode).json({
         status: err.statusCode,
-        type: 'AppException',
+        type: "AppException",
         message: err.message,
       });
     }
@@ -31,10 +32,10 @@ export class AppExceptionFilter implements ExceptionFilter {
         status: statusCode,
         type: err.name,
         message:
-          typeof message === 'string'
+          typeof message === "string"
             ? message
             : Array.isArray(message)
-              ? message.join('; ')
+              ? message.join("; ")
               : err.name,
       });
     }
@@ -42,7 +43,7 @@ export class AppExceptionFilter implements ExceptionFilter {
     response.status(500).json({
       status: err.statusCode,
       statusCode: 500,
-      message: 'Erro interno do servidor.',
+      message: "Erro interno do servidor.",
     });
   }
 }

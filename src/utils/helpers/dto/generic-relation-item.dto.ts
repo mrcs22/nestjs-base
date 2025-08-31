@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString } from "class-validator";
 
 export class GenericRelationItemDto {
   @IsString()
@@ -9,4 +9,3 @@ export class GenericRelationItemDto {
   @IsString()
   name: string;
 }
-

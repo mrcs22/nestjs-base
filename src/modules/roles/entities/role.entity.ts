@@ -4,43 +4,41 @@ import {
   Column,
   PrimaryColumn,
   DeleteDateColumn,
-
-  ManyToOne,
   OneToMany,
-} from 'typeorm';
-import { CreateRoleDto } from '../dto/create-role.dto';
-import { UpdateRoleDto } from '../dto/update-role.dto';
-import { Permission } from './permissions.entity';
+} from "typeorm";
+import { CreateRoleDto } from "../dto/create-role.dto";
+import { UpdateRoleDto } from "../dto/update-role.dto";
+import { Permission } from "./permissions.entity";
 
-@Entity('roles')
+@Entity("roles")
 export class Role {
-  @PrimaryGeneratedColumn('uuid')
-  @PrimaryColumn({ type: 'varchar', length: 36 })
+  @PrimaryGeneratedColumn("uuid")
+  @PrimaryColumn({ type: "varchar", length: 36 })
   id: string;
 
   @Column({
-    type: 'varchar',
+    type: "varchar",
     length: 255,
   })
   name: string;
 
-  @Column({ name: 'is_active', default: true })
+  @Column({ name: "is_active", default: true })
   isActive: boolean;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: "varchar", length: 255 })
   notes: string;
 
   @Column({
-    name: 'created_at',
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP',
+    name: "created_at",
+    type: "timestamp",
+    default: () => "CURRENT_TIMESTAMP",
   })
   createdAt: Date;
 
   @Column({
-    name: 'updated_at',
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP',
+    name: "updated_at",
+    type: "timestamp",
+    default: () => "CURRENT_TIMESTAMP",
   })
   updatedAt: Date;
 
@@ -55,9 +53,9 @@ export class Role {
 
   public fromDto(dto: CreateRoleDto | UpdateRoleDto): void {
     this.name = dto.name;
-    this.notes = dto.notes || '';
+    this.notes = dto.notes || "";
     this.isActive = dto.isActive;
-    
+
     this.permissions = dto.permissions?.map((permission) => {
       const p = new Permission();
       p.fromDto(permission);
